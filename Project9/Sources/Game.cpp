@@ -10,12 +10,17 @@ Game::Game()
 	imageBlocks.loadFromFile("blocks.png");
 	textureBlocks.loadFromImage(imageBlocks);
 
+
 	moveSpeed = 1.3;
 	bombCoumt = 3;
 	fireSize = 2;
 	monstersCount = 5;
 	heroDirection = 0;
+
+	maxPosForDestrBlocks = 131;
+
 	deathHero = nullptr;
+
 	sprBUff.setTextureRect(sf::IntRect(0, 0, unitSize - aLittleBit * 2, unitSize - aLittleBit * 2));
 }
  std::vector<Fire*> Game::getNewFire(int x, int y)
@@ -233,11 +238,11 @@ Game::Game()
  void Game::method()
 {
 
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Bomberman");
+	sf::RenderWindow window(sf::VideoMode(600, 600), "Bomberman");										//set Window param
 	window.setFramerateLimit(60);
 	srand(time(0));
 
-	blocksIndestr = new Indestructible[blocksIndestrSize];
+	blocksIndestr = new Indestructible[blocksIndestrSize];												//set indestructible blocks
 	for (int i = 0; i < blocksIndestrSize; i++)
 	{
 		blocksIndestr[i] = Indestructible(i, &textureBlocks);
@@ -246,30 +251,29 @@ Game::Game()
 
 
 	//blocksDestr.fill = new Destructible[90]; //131
-	for (int i = 0, j = 1; j <= 131; i++)
+	for (int i = 0, pos = 1; pos <= maxPosForDestrBlocks; i++)											//set destructible blocks
 	{
 		if (rand() % 2 == 0)
 		{
-			j++;
+			pos++;
 		}
 		if (rand() % 3 == 0)
 		{
-			j++;
+			pos++;
 		}
-		j++;
-		blocksDestr.push_back(new Destructible(&textureBlocks, j));
+		pos++;
+		blocksDestr.push_back(new Destructible(&textureBlocks, pos));
 
 	}
 
-	int *buff = new int;
-	*buff = rand() % blocksDestr.size();
-	std::cout << "buff = " << *buff;
-	door = new Door(blocksDestr.at(*buff)->getSprite().getPosition().x, blocksDestr.at(*buff)->getSprite().getPosition().y);
-	delete buff;
-	vMonsters.clear();
+	int *numb_block_for_dor = new int;
+	*numb_block_for_dor = rand() % blocksDestr.size();													//rand pos for dors behind block, set it;
+	door = new Door(blocksDestr.at(*numb_block_for_dor)->getSprite().getPosition().x, blocksDestr.at(*numb_block_for_dor)->getSprite().getPosition().y);
+	delete numb_block_for_dor;
+	
+	vMonsters.clear();																					//set monsters;
 	for (int i = 0; i < monstersCount; i++)
-	{
-		
+	{		
 		vMonsters.push_back(new SimpleMonster(blocksIndestr, blocksIndestrSize, blocksDestr));
 	}
 

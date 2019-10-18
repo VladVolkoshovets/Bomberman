@@ -81,7 +81,7 @@ void Player::MoveLeft(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, 
 
 			if (heroBounds.intersects(indestBlocksArr[i].getBound()))
 			{
-				if (spriteInvis.getPosition().y + 23 < indestBlocksArr[i].getSprite().getPosition().y)								//are placed?
+				if (spriteInvis.getPosition().y + 24 < indestBlocksArr[i].getSprite().getPosition().y)								//is placed?
 				{
 					spriteHero.move(moveSpeed * time, 0);																			//remuving to right
 					spriteInvis.move(moveSpeed * time, 0);
@@ -91,7 +91,7 @@ void Player::MoveLeft(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, 
 					break;
 
 				}
-				else if (spriteInvis.getPosition().y - 23 > indestBlocksArr[i].getSprite().getPosition().y)
+				else if (spriteInvis.getPosition().y - 24 > indestBlocksArr[i].getSprite().getPosition().y)
 				{
 					spriteHero.move(moveSpeed * time, 0);
 					spriteInvis.move(moveSpeed * time, 0);
@@ -163,7 +163,7 @@ void Player::MoveRight(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks,
 		{
 			if (heroBounds.intersects(indestBlocksArr[i].getBound()))
 			{
-				if (spriteInvis.getPosition().y + 23 < indestBlocksArr[i].getSprite().getPosition().y)
+				if (spriteInvis.getPosition().y + 24 < indestBlocksArr[i].getSprite().getPosition().y)
 				{
 					spriteHero.move(-moveSpeed * time, 0);
 					spriteInvis.move(-moveSpeed * time, 0);
@@ -173,7 +173,7 @@ void Player::MoveRight(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks,
 					break;
 
 				}
-				else if (spriteInvis.getPosition().y - 23 > indestBlocksArr[i].getSprite().getPosition().y)
+				else if (spriteInvis.getPosition().y - 24 > indestBlocksArr[i].getSprite().getPosition().y)
 				{
 					spriteHero.move(-moveSpeed * time, 0);
 					spriteInvis.move(-moveSpeed * time, 0);
@@ -245,7 +245,7 @@ void Player::MoveUp(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, st
 		{
 			if (heroBounds.intersects(indestBlocksArr[i].getBound()))
 			{
-				if (spriteInvis.getPosition().x + 23 < indestBlocksArr[i].getSprite().getPosition().x)
+				if (spriteInvis.getPosition().x + 24 < indestBlocksArr[i].getSprite().getPosition().x)
 				{
 					spriteHero.move(0, moveSpeed * time);
 					spriteInvis.move(0, moveSpeed * time);
@@ -253,7 +253,7 @@ void Player::MoveUp(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, st
 					needToReturn = false;
 					break;
 				}
-				else if (spriteInvis.getPosition().x - 23 > indestBlocksArr[i].getSprite().getPosition().x)
+				else if (spriteInvis.getPosition().x - 24 > indestBlocksArr[i].getSprite().getPosition().x)
 				{
 					spriteHero.move(0, moveSpeed * time);
 					spriteInvis.move(0, moveSpeed * time);
@@ -327,7 +327,7 @@ void Player::MoveDown(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, 
 		{
 			if (heroBounds.intersects(indestBlocksArr[i].getBound()))
 			{
-				if (spriteInvis.getPosition().x + 23 < indestBlocksArr[i].getSprite().getPosition().x)
+				if (spriteInvis.getPosition().x + 24 < indestBlocksArr[i].getSprite().getPosition().x)
 				{
 					spriteHero.move(0, -moveSpeed * time);
 					spriteInvis.move(0, -moveSpeed * time);
@@ -335,7 +335,7 @@ void Player::MoveDown(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, 
 					needToReturn = false;
 					break;
 				}
-				else if (spriteInvis.getPosition().x - 23 > indestBlocksArr[i].getSprite().getPosition().x)
+				else if (spriteInvis.getPosition().x - 24 > indestBlocksArr[i].getSprite().getPosition().x)
 				{
 					spriteHero.move(0, -moveSpeed * time);
 					spriteInvis.move(0, -moveSpeed * time);

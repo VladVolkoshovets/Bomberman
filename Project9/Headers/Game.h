@@ -52,6 +52,7 @@ private:
 	std::vector<Ruined*> vRuined;
 	std::vector<Monster*> vMonsters;
 	std::vector<DeathMonster*> vDeathMonster;
+	int maxPosForDestrBlocks;
 	int monstersCount;
 	Door *door;
 	sf::Clock clock1;
@@ -61,6 +62,7 @@ private:
 	DeathHero *deathHero;
 	
 	Game();
+	
 	std::vector<Fire*> getNewFire(int x, int y);
 	
 
