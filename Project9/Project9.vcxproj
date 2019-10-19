@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Sources\Boost.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Sources\Blocks.cpp" />
     <ClCompile Include="Sources\Bomb.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="Sources\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="bigBoom.jpg" />
     <Image Include="blocks.png" />
     <Image Include="bomb.png" />
     <Image Include="fire.png" />
@@ -176,6 +178,7 @@
     <Text Include="x64\Release\Project9.log" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Headers\Boost.h" />
     <ClInclude Include="Headers\Blocks.h" />
     <ClInclude Include="Headers\Bomb.h" />
     <ClInclude Include="Headers\BotFire.h" />

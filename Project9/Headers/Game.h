@@ -9,6 +9,7 @@
 #include"Indestructible.h"
 #include"Fone.h"
 #include"Door.h"
+#include"Boost.h"
 #include"Bomb.h"
 #include"Fire.h"
 #include"Player.h"
@@ -27,6 +28,7 @@
 #include"TongueLeft.h"
 #include"TongueTop.h"
 #include"TongueRight.h"
+
 class Game
 {
 private:
@@ -55,6 +57,7 @@ private:
 	int maxPosForDestrBlocks;
 	int monstersCount;
 	Door *door;
+	Boost *boost;
 	sf::Clock clock1;
 	sf::Sprite sprBUff;
 	const unsigned short aLittleBit = 2; // для уникнення похибки накладдання спрайтів;

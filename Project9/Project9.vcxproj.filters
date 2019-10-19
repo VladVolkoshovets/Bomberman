@@ -96,6 +96,9 @@
     <ClCompile Include="Sources\DeathHero.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\Boost.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="blocks.png">
@@ -111,6 +114,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="wall.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="bigBoom.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -203,6 +209,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\DeathSimpleMonster.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Boost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,8 +12,8 @@ Game::Game()
 
 
 	moveSpeed = 1.3;
-	bombCoumt = 3;
-	fireSize = 2;
+	bombCoumt = 2;
+	fireSize = 1;
 	monstersCount = 5;
 	heroDirection = 0;
 
@@ -265,13 +265,21 @@ Game::Game()
 		blocksDestr.push_back(new Destructible(&textureBlocks, pos));
 
 	}
-
+	//rand pos for dors behind block, set it;
 	int *numb_block_for_dor = new int;
-	*numb_block_for_dor = rand() % blocksDestr.size();													//rand pos for dors behind block, set it;
+	*numb_block_for_dor = rand() % blocksDestr.size();													
 	door = new Door(blocksDestr.at(*numb_block_for_dor)->getSprite().getPosition().x, blocksDestr.at(*numb_block_for_dor)->getSprite().getPosition().y);
-	delete numb_block_for_dor;
 	
-	vMonsters.clear();																					//set monsters;
+	//rand pos for boost behind block, set it;
+	int* numb_block_for_boost = new int;
+	do {
+		*numb_block_for_boost = 1;
+	} while (*numb_block_for_dor == *numb_block_for_boost);
+	boost = new Boost(blocksDestr.at(*numb_block_for_boost)->getSprite().getPosition().x, blocksDestr.at(*numb_block_for_boost)->getSprite().getPosition().y);
+	delete numb_block_for_dor, numb_block_for_boost;
+
+	//set monsters;
+	vMonsters.clear();																					
 	for (int i = 0; i < monstersCount; i++)
 	{		
 		vMonsters.push_back(new SimpleMonster(blocksIndestr, blocksIndestrSize, blocksDestr));
@@ -282,6 +290,8 @@ Game::Game()
 	player1.setMS(moveSpeed);
 	player1.setBombCount(bombCoumt);
 	live = true;
+	std::cout << "tyt";
+	//main game cycle
 	while (window.isOpen())
 	{
 		timeG = clock1.getElapsedTime().asMicroseconds();
@@ -313,6 +323,19 @@ Game::Game()
 			window.draw(blocksIndestr[i].getSprite());
 		}
 		window.draw(door->getSprite());
+		if (boost)
+		{
+			window.draw(boost->getSprite());
+			if (player1.GetInvSprite().getGlobalBounds().intersects(boost->getBound()))
+			{
+				delete boost;
+				boost = nullptr;
+				fireSize++;
+			}
+			
+		}
+		
+		
 		for (int i = 0; i < blocksDestr.size(); i++)
 		{
 			window.draw(blocksDestr.at(i)->getSprite());
@@ -480,6 +503,7 @@ Game::Game()
 		}
 		if (deathHero != nullptr && !deathHero->bitterDeath())
 		{
+			door->~Door();
 			break;
 		}
 		

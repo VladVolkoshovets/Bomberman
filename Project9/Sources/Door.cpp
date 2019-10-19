@@ -1,5 +1,5 @@
 #include"../Headers/Door.h"
-Door::Door(int x, int y)
+Door::Door(int x, int y) 
 {
 	doorTxt = new sf::Texture;
 	doorTxt->loadFromFile("blocks.png");
@@ -15,12 +15,16 @@ Door::Door(int x, int y)
 
 Door::~Door()
 {
+	delete doorTxt;
+	delete doorSpr;
+	delete invSpr;
+
 }
-sf::Sprite Door::getSprite()
+sf::Sprite Door::getSprite() const
 {
 	return *doorSpr;
 }
-sf::FloatRect Door::getBound()
+sf::FloatRect Door::getBound() const
 {
 	return invSpr->getGlobalBounds();
 }

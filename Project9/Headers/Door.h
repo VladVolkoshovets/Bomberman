@@ -6,9 +6,9 @@ public:
 	Door(int, int);
 	~Door();
 
-	sf::Sprite getSprite();
+	sf::Sprite getSprite() const;
 
-	sf::FloatRect getBound();
+	sf::FloatRect getBound() const;
 
 private:
 	sf::Image *dorsImg;
