@@ -237,12 +237,13 @@ Game::Game()
 }
  void Game::method()
 {
-
-	sf::RenderWindow window(sf::VideoMode(600, 600), "Bomberman");										//set Window param
+	//set Window param
+	sf::RenderWindow window(sf::VideoMode(600, 600), "Bomberman");										
 	window.setFramerateLimit(60);
 	srand(time(0));
 
-	blocksIndestr = new Indestructible[blocksIndestrSize];												//set indestructible blocks
+	//set indestructible blocks
+	blocksIndestr = new Indestructible[blocksIndestrSize];												
 	for (int i = 0; i < blocksIndestrSize; i++)
 	{
 		blocksIndestr[i] = Indestructible(i, &textureBlocks);
@@ -250,8 +251,8 @@ Game::Game()
 	}
 
 
-	//blocksDestr.fill = new Destructible[90]; //131
-	for (int i = 0, pos = 1; pos <= maxPosForDestrBlocks; i++)											//set destructible blocks
+	//set destructible blocks
+	for (int i = 0, pos = 1; pos <= maxPosForDestrBlocks; i++)										
 	{
 		if (rand() % 2 == 0)
 		{
@@ -273,7 +274,7 @@ Game::Game()
 	//rand pos for boost behind block, set it;
 	int* numb_block_for_boost = new int;
 	do {
-		*numb_block_for_boost = 1;
+		*numb_block_for_boost = rand() % blocksDestr.size();
 	} while (*numb_block_for_dor == *numb_block_for_boost);
 	boost = new Boost(blocksDestr.at(*numb_block_for_boost)->getSprite().getPosition().x, blocksDestr.at(*numb_block_for_boost)->getSprite().getPosition().y);
 	delete numb_block_for_dor, numb_block_for_boost;
@@ -351,7 +352,8 @@ Game::Game()
 		window.draw(wall.getSpriteDown());
 		window.draw(wall.getSpriteRight());
 
-		for (int i = 0; i < vBombs.size(); i++)             //анімація бомби, кінець її, початок вогню 
+		//анімація бомби, кінець її, початок вогню 
+		for (int i = 0; i < vBombs.size(); i++)             
 		{
 			if (!vBombs[i]->stay(timeG))
 			{
@@ -362,10 +364,12 @@ Game::Game()
 			else
 			{
 				window.draw(vBombs[i]->getSprite());
-				//window.draw(vBombs[i]->getInvSprite());   //   тест невидимої текстури
+				//   тест невидимої текстури
+				//window.draw(vBombs[i]->getInvSprite());   
 			}
 		}
-		for (int i = 0; i < vvFire.size(); i++)			// вивід і видалення вогню
+		// вивід і видалення вогню
+		for (int i = 0; i < vvFire.size(); i++)			
 		{
 			if (vvFire[i].at(0)->fireInTheHall())
 			{
@@ -386,7 +390,8 @@ Game::Game()
 			}
 
 		}
-		for (int i = 0; i < vRuined.size(); i++)             //анімація знищення
+		//анімація знищення
+		for (int i = 0; i < vRuined.size(); i++)             
 		{
 			if (!vRuined[i]->destruction())
 			{
@@ -398,10 +403,12 @@ Game::Game()
 			else
 			{
 				window.draw(vRuined[i]->getSprite());
-				//window.draw(vBombs[i]->getInvSprite());   //   тест невидимої текстури
+				//тест невидимої текстури
+				//window.draw(vBombs[i]->getInvSprite());   
 			}
 		}
-		if (!vMonsters.empty()) //monster move and death
+		//monster move and death
+		if (!vMonsters.empty()) 
 		{
 			for (size_t j = 0; j < vMonsters.size(); j++)
 			{
@@ -432,8 +439,8 @@ Game::Game()
 			}
 				
 		}
-		
-		if (!vvFire.empty())  //fire + bomb
+		//fire + bomb
+		if (!vvFire.empty())  
 		{
 			for (size_t k = 0; k < vvFire.size(); k++)
 			{
@@ -451,7 +458,8 @@ Game::Game()
 				}
 			}
 		}
-		if (!vvFire.empty())  //fire + Hero
+		//fire + Hero
+		if (!vvFire.empty()) 
 		{
 			for (size_t k = 0; k < vvFire.size(); k++)
 			{
@@ -479,8 +487,8 @@ Game::Game()
 			deathHero = new DeathHero(player1.GetInvSprite().getPosition().x, player1.GetInvSprite().getPosition().y);
 
 		}
-		
-		if (!vDeathMonster.empty()) // drow deathMonster
+		//drow deathMonster
+		if (!vDeathMonster.empty()) 
 		{	
 			for (int i = 0; i < vDeathMonster.size(); i++)
 			{
