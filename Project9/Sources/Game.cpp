@@ -21,7 +21,7 @@ Game::Game()
 
 	deathHero = nullptr;
 
-	sprBUff.setTextureRect(sf::IntRect(0, 0, unitSize - aLittleBit * 2, unitSize - aLittleBit * 2));
+	sprBUff.setTextureRect(sf::IntRect(0, 0, unitSize - LITTLE_BIT * 2, unitSize - LITTLE_BIT * 2));
 }
  std::vector<Fire*> Game::getNewFire(int x, int y)
 {
@@ -35,7 +35,7 @@ Game::Game()
 	{
 		buffX += unitSize;
 
-		sprBUff.setPosition(buffX + aLittleBit, buffY + aLittleBit);
+		sprBUff.setPosition(buffX + LITTLE_BIT, buffY + LITTLE_BIT);
 		if (sprBUff.getGlobalBounds().intersects(wall.getRightBound()))
 		{
 			break;
@@ -85,7 +85,7 @@ Game::Game()
 	{
 		buffX -= unitSize;
 
-		sprBUff.setPosition(buffX + aLittleBit, buffY + aLittleBit);
+		sprBUff.setPosition(buffX + LITTLE_BIT, buffY + LITTLE_BIT);
 		if (sprBUff.getGlobalBounds().intersects(wall.getLeftBound()))
 		{
 			break;
@@ -134,7 +134,7 @@ Game::Game()
 	for (int i = 0; i < fireSize; i++)
 	{
 		buffY -= unitSize;
-		sprBUff.setPosition(buffX + aLittleBit, buffY + aLittleBit);
+		sprBUff.setPosition(buffX + LITTLE_BIT, buffY + LITTLE_BIT);
 		if (sprBUff.getGlobalBounds().intersects(wall.getUpBound()))
 		{
 			break;
@@ -182,7 +182,7 @@ Game::Game()
 	for (int i = 0; i < fireSize; i++)
 	{
 		buffY += unitSize;
-		sprBUff.setPosition(buffX + aLittleBit, buffY + aLittleBit);
+		sprBUff.setPosition(buffX + LITTLE_BIT, buffY + LITTLE_BIT);
 		if (sprBUff.getGlobalBounds().intersects(wall.getDownBound()))
 		{
 			break;
@@ -291,7 +291,6 @@ Game::Game()
 	player1.setMS(moveSpeed);
 	player1.setBombCount(bombCoumt);
 	live = true;
-	std::cout << "tyt";
 	//main game cycle
 	while (window.isOpen())
 	{
@@ -483,7 +482,6 @@ Game::Game()
 		}
 		if (deathHero == nullptr && live == false)
 		{
-			std::cout << "DEAD!!!" << std::endl;
 			deathHero = new DeathHero(player1.GetInvSprite().getPosition().x, player1.GetInvSprite().getPosition().y);
 
 		}

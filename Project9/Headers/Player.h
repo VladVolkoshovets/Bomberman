@@ -6,7 +6,7 @@
 class  Player
 {
 private:
-
+	const int MOVE_CORECTION = 20;
 	sf::Image imageMain;
 	sf::Texture textureMain;
 	sf::Sprite spriteHero;

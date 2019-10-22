@@ -1,5 +1,5 @@
 #pragma once
-#include<iostream>
+
 #include<vector>
 #include<SFML\Graphics.hpp>
 #include"Global.h"
@@ -60,7 +60,7 @@ private:
 	Boost *boost;
 	sf::Clock clock1;
 	sf::Sprite sprBUff;
-	const unsigned short aLittleBit = 2; // для уникнення похибки накладдання спрайтів;
+	const unsigned short LITTLE_BIT = 2; // для уникнення похибки накладдання спрайтів;
 	bool death;
 	DeathHero *deathHero;
 	
