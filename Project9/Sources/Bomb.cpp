@@ -18,19 +18,20 @@ Bomb::Bomb(int x, int y)
 	wentOut = 0;
 	wentInvOut = 0;
 	currentFrame = 0;
-	seconds = 0;
+	lifeTimeSeconds = 0;
 }
 Bomb::~Bomb()
 {
 	countBomb--;
 }
-bool Bomb::stay(float time)
+bool Bomb::isBombAlive(float time)
 {
-	if (int(seconds) >= 3)
+	if (int(lifeTimeSeconds) >= 2.3)
 	{
-		return 0;
+		return false;
 	}
-	seconds = superTime.getElapsedTime().asSeconds();
+	lifeTimeSeconds = superTime.getElapsedTime().asSeconds();
+	//animation
 	currentFrame += 0.03*time;
 	if (currentFrame >= 4)
 	{
@@ -53,7 +54,7 @@ bool Bomb::stay(float time)
 	default:
 		break;
 	}
-	return 1;
+	return true;
 
 }
 void Bomb::setpos(int x, int y)
@@ -79,7 +80,7 @@ void Bomb::setpos(int x, int y)
 }
 void Bomb::setTime(float seconds)
 {
-	this->seconds = seconds;
+	this->lifeTimeSeconds = seconds;
 }
 sf::Sprite Bomb::getSprite()
 {

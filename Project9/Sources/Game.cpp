@@ -287,13 +287,14 @@ Game::Game()
 	}
 
 
-	//bomb = nullptr;
+	//set player characteristics
 	player1.setMS(moveSpeed);
 	player1.setBombCount(bombCoumt);
 	live = true;
 	//main game cycle
 	while (window.isOpen())
 	{
+		//set time(game speed)
 		timeG = clock1.getElapsedTime().asMicroseconds();
 		clock1.restart();
 		timeG = timeG / 10000;
@@ -304,6 +305,7 @@ Game::Game()
 			if (Event.type == sf::Event::Closed)
 				window.close();
 		}
+		//Move hero and bomb placing
 		if (live == true)
 		{
 			player1.move(blocksIndestr, blocksIndestrSize, blocksDestr, vBombs, timeG, wall);
@@ -313,9 +315,9 @@ Game::Game()
 				{
 					vBombs.push_back(new Bomb(player1.GetInvSprite().getPosition().x, player1.GetInvSprite().getPosition().y));
 				}
-
 			}
 		}
+		//Draw
 		window.clear(sf::Color::Black);
 		window.draw(fone.getSprite());
 		for (int i = 0; i < blocksIndestrSize; i++)
@@ -334,14 +336,11 @@ Game::Game()
 			}
 			
 		}
-		
-		
 		for (int i = 0; i < blocksDestr.size(); i++)
 		{
 			window.draw(blocksDestr.at(i)->getSprite());
 
 		}
-
 		window.draw(wall.getSpriteUp());
 		window.draw(wall.getSpriteLeft());
 		if (deathHero == nullptr)
@@ -350,11 +349,10 @@ Game::Game()
 		}
 		window.draw(wall.getSpriteDown());
 		window.draw(wall.getSpriteRight());
-
-		//анімація бомби, кінець її, початок вогню 
+		//Bomb animation
 		for (int i = 0; i < vBombs.size(); i++)             
 		{
-			if (!vBombs[i]->stay(timeG))
+			if (!vBombs[i]->isBombAlive(timeG))
 			{
 				vvFire.push_back(getNewFire(vBombs[i]->getSprite().getPosition().x, vBombs[i]->getSprite().getPosition().y));
 				delete vBombs[i];
@@ -363,11 +361,9 @@ Game::Game()
 			else
 			{
 				window.draw(vBombs[i]->getSprite());
-				//   тест невидимої текстури
-				//window.draw(vBombs[i]->getInvSprite());   
 			}
 		}
-		// вивід і видалення вогню
+		//Fire! Abd animation!
 		for (int i = 0; i < vvFire.size(); i++)			
 		{
 			if (vvFire[i].at(0)->fireInTheHall())
@@ -389,7 +385,7 @@ Game::Game()
 			}
 
 		}
-		//анімація знищення
+		//Extermination! And animation
 		for (int i = 0; i < vRuined.size(); i++)             
 		{
 			if (!vRuined[i]->destruction())
@@ -401,12 +397,10 @@ Game::Game()
 			}  
 			else
 			{
-				window.draw(vRuined[i]->getSprite());
-				//тест невидимої текстури
-				//window.draw(vBombs[i]->getInvSprite());   
+				window.draw(vRuined[i]->getSprite()); 
 			}
 		}
-		//monster move and death
+		//Monster move and death
 		if (!vMonsters.empty()) 
 		{
 			for (size_t j = 0; j < vMonsters.size(); j++)
@@ -438,7 +432,8 @@ Game::Game()
 			}
 				
 		}
-		//fire + bomb
+		//Logics
+		//Fire + bomb
 		if (!vvFire.empty())  
 		{
 			for (size_t k = 0; k < vvFire.size(); k++)
@@ -457,7 +452,7 @@ Game::Game()
 				}
 			}
 		}
-		//fire + Hero
+		//Fire + Hero
 		if (!vvFire.empty()) 
 		{
 			for (size_t k = 0; k < vvFire.size(); k++)
@@ -515,6 +510,7 @@ Game::Game()
 		
 		if (player1.GetInvSprite().getGlobalBounds().intersects(door->getBound()) && vMonsters.empty())
 		{
+			//next lvl()
 			break;
 		}
 		window.display();

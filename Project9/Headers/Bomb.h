@@ -5,7 +5,7 @@ class Bomb
 public:
 	Bomb(int x, int y);
 	~Bomb();
-	bool stay(float time);
+	bool isBombAlive(float time);
 	void setpos(int x, int y);
 	void setTime(float seconds);
 	sf::Sprite getSprite();
@@ -29,5 +29,5 @@ private:
 	sf::FloatRect bombInvBounds;
 	sf::Clock superTime;
 	float currentFrame;
-	float seconds;
+	float lifeTimeSeconds;
 };
