@@ -235,7 +235,7 @@ Game::Game()
 	}
 	return game;
 }
- void Game::method()
+ void Game::mainMethod()
 {
 	//set Window param
 	sf::RenderWindow window(sf::VideoMode(600, 600), "Bomberman");										

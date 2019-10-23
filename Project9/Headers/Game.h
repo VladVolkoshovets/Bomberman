@@ -71,5 +71,5 @@ private:
 
 public:
 	static Game* getInstance();
-	void method();
+	void mainMethod();
 };
