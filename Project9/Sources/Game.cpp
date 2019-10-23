@@ -12,7 +12,7 @@ Game::Game()
 
 
 	moveSpeed = 1.3;
-	bombCoumt = 2;
+	bomb_coumt = 2;
 	fireSize = 1;
 	monstersCount = 5;
 	heroDirection = 0;
@@ -289,7 +289,7 @@ Game::Game()
 
 	//set player characteristics
 	player1.setMS(moveSpeed);
-	player1.setBombCount(bombCoumt);
+	player1.setBombCount(bomb_coumt);
 	live = true;
 	//main game cycle
 	while (window.isOpen())

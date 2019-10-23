@@ -38,7 +38,7 @@ private:
 
 	static float timeG;
 	float moveSpeed;
-	unsigned short bombCoumt;
+	unsigned short bomb_coumt;
 	unsigned short fireSize;
 	int heroDirection;
 	Player player1;
