@@ -7,8 +7,8 @@ SimpleMonster::SimpleMonster(Blocks * indestBlocksArr, unsigned short sizeIndest
 	texture.loadFromImage(image);
 	spriteMonster.setTexture(texture);
 	spriteMonster.setTextureRect(sf::IntRect(0, 0, 66, 66));
-	spriteMonster.setScale(unitSize/66., unitSize/66.);
-	invSprite.setTextureRect(sf::IntRect(0, 0, unitSize - 4, unitSize - 4));
+	spriteMonster.setScale(UNIT_SIZE/66., UNIT_SIZE/66.);
+	invSprite.setTextureRect(sf::IntRect(0, 0, UNIT_SIZE - 4, UNIT_SIZE - 4));
 	setPosition(indestBlocksArr, sizeIndestBlocks, destBlocksV);
 	currentFrame = 0;
 	moveSpeed = 0.55;

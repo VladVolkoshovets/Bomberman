@@ -1,15 +1,12 @@
 #include"../Headers/Ruined.h"
-Ruined::Ruined()
+Ruined::Ruined(int x, int y, sf::Image imgRuined)
 {
-}
-Ruined::Ruined(int x, int y)
-{
-	imgRuined.loadFromFile("ruined.png");
 	txtRuined.loadFromImage(imgRuined);
 	sprRuined.setTexture(txtRuined);
-	sprRuined.setTextureRect(sf::IntRect(8, 156, unitSize, unitSize));
+	sprRuined.setTextureRect(sf::IntRect(8, 156, UNIT_SIZE, UNIT_SIZE));
 	sprRuined.setPosition(x, y);
 	currentFrame = 0;
+	animationSpeed = 171;
 }
 bool Ruined::destruction()
 {
@@ -17,8 +14,8 @@ bool Ruined::destruction()
 	{
 		return false;
 	}
-	currentFrame = time.getElapsedTime().asMilliseconds() / 171, 4;
-	sprRuined.setTextureRect(sf::IntRect(9 + 50 * currentFrame, 156, unitSize, unitSize));
+	currentFrame = time.getElapsedTime().asMilliseconds() / animationSpeed;
+	sprRuined.setTextureRect(sf::IntRect(9 + 50 * currentFrame, 156, UNIT_SIZE, UNIT_SIZE));
 	return true;
 }
 sf::Sprite Ruined::getSprite()

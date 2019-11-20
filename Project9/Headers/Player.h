@@ -7,7 +7,6 @@ class  Player
 {
 private:
 	const int MOVE_CORECTION = 20;
-	sf::Image imageMain;
 	sf::Texture textureMain;
 	sf::Sprite spriteHero;
 	sf::Sprite spriteInvis;
@@ -25,6 +24,7 @@ private:
 public:
 	Player();
 	~Player();
+	void setTexture(sf::Image);
 	sf::Sprite GetSprite();
 	sf::Sprite GetInvSprite();
 	void setMS(float moveSpeed);

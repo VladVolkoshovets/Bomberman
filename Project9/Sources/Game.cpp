@@ -1,232 +1,14 @@
 
 #include "..\Headers\Game.h"
-
-float Game::timeG = 0;
+#include<iostream>
+float Game::timeGame = 0;
 Game *Game::game = nullptr;
 Game::Game()
 {
-	blocksIndestrSize = 36;
-
-	imageBlocks.loadFromFile("blocks.png");
-	textureBlocks.loadFromImage(imageBlocks);
-
-
-	moveSpeed = 1.3;
-	bomb_coumt = 2;
-	fireSize = 1;
-	monstersCount = 5;
-	heroDirection = 0;
-
-	maxPosForDestrBlocks = 131;
-
-	deathHero = nullptr;
-
-	sprBUff.setTextureRect(sf::IntRect(0, 0, unitSize - LITTLE_BIT * 2, unitSize - LITTLE_BIT * 2));
+	
+	
 }
- std::vector<Fire*> Game::getNewFire(int x, int y)
-{
-	//fire centr
-	int buffX = x, buffY = y;
-	bool possibility = 1;
-	vFire.clear();
-	vFire.push_back(new MainFire(x, y));
-	//fire right
-	for (int i = 0; i < fireSize; i++)
-	{
-		buffX += unitSize;
-
-		sprBUff.setPosition(buffX + LITTLE_BIT, buffY + LITTLE_BIT);
-		if (sprBUff.getGlobalBounds().intersects(wall.getRightBound()))
-		{
-			break;
-		}
-		for (int j = 0; j < blocksIndestrSize; j++)
-		{
-			if (sprBUff.getGlobalBounds().intersects(blocksIndestr[j].getBound()))
-			{
-				possibility = false;
-				break;
-			}
-		}
-		if (possibility == false)
-		{
-			break;
-		}
-		for (int j = 0; j < blocksDestr.size(); j++)
-		{
-			if (sprBUff.getGlobalBounds().intersects(blocksDestr.at(j)->getBound()))
-			{
-				vRuined.push_back(new Ruined(blocksDestr.at(j)->getSprite().getPosition().x, blocksDestr.at(j)->getSprite().getPosition().y));
-				delete blocksDestr.at(j);
-				blocksDestr.erase(blocksDestr.begin() + j);
-				j--;
-				possibility = false;
-				break;
-			}
-		}
-		if (possibility == false)
-		{
-			break;
-		}
-
-		if (fireSize - 1 != i)
-		{
-			vFire.push_back(new RightFire(buffX, buffY));
-		}
-		else
-		{
-			vFire.push_back(new TongueRight(buffX, buffY));
-		}
-	}
-	//fire left
-	buffX = x;
-	possibility = true;
-	for (int i = 0; i < fireSize; i++)
-	{
-		buffX -= unitSize;
-
-		sprBUff.setPosition(buffX + LITTLE_BIT, buffY + LITTLE_BIT);
-		if (sprBUff.getGlobalBounds().intersects(wall.getLeftBound()))
-		{
-			break;
-		}
-		for (int j = 0; j < blocksIndestrSize; j++)
-		{
-			if (sprBUff.getGlobalBounds().intersects(blocksIndestr[j].getBound()))
-			{
-				possibility = false;
-				break;
-			}
-		}
-		if (possibility == false)
-		{
-			break;
-		}
-		for (int j = 0; j < blocksDestr.size(); j++)
-		{
-			if (sprBUff.getGlobalBounds().intersects(blocksDestr.at(j)->getBound()))
-			{
-				vRuined.push_back(new Ruined(blocksDestr.at(j)->getSprite().getPosition().x, blocksDestr.at(j)->getSprite().getPosition().y));
-				delete blocksDestr.at(j);
-				blocksDestr.erase(blocksDestr.begin() + j);
-				j--;
-				possibility = false;
-				break;
-			}
-		}
-		if (possibility == false)
-		{
-			break;
-		}
-
-		if (fireSize - 1 != i)
-		{
-			vFire.push_back(new LeftFire(buffX, y));
-		}
-		else
-		{
-			vFire.push_back(new TongueLeft(buffX, y));
-		}
-	}
-	//fire top
-	buffX = x;
-	possibility = true;
-	for (int i = 0; i < fireSize; i++)
-	{
-		buffY -= unitSize;
-		sprBUff.setPosition(buffX + LITTLE_BIT, buffY + LITTLE_BIT);
-		if (sprBUff.getGlobalBounds().intersects(wall.getUpBound()))
-		{
-			break;
-		}
-		for (int j = 0; j < blocksIndestrSize; j++)
-		{
-			if (sprBUff.getGlobalBounds().intersects(blocksIndestr[j].getBound()))
-			{
-				possibility = false;
-				break;
-			}
-		}
-		if (possibility == false)
-		{
-			break;
-		}
-		for (int j = 0; j < blocksDestr.size(); j++)
-		{
-			if (sprBUff.getGlobalBounds().intersects(blocksDestr.at(j)->getBound()))
-			{
-				vRuined.push_back(new Ruined(blocksDestr.at(j)->getSprite().getPosition().x, blocksDestr.at(j)->getSprite().getPosition().y));
-				delete blocksDestr.at(j);
-				blocksDestr.erase(blocksDestr.begin() + j);
-				possibility = false;
-				break;
-			}
-		}
-		if (possibility == false)
-		{
-			break;
-		}
-
-		if (fireSize - 1 != i)
-		{
-			vFire.push_back(new TopFire(x, buffY));
-		}
-		else
-		{
-			vFire.push_back(new TongueTop(x, buffY));
-		}
-	}
-	//fire bot
-	buffY = y;
-	possibility = true;
-	for (int i = 0; i < fireSize; i++)
-	{
-		buffY += unitSize;
-		sprBUff.setPosition(buffX + LITTLE_BIT, buffY + LITTLE_BIT);
-		if (sprBUff.getGlobalBounds().intersects(wall.getDownBound()))
-		{
-			break;
-		}
-		for (int j = 0; j < blocksIndestrSize; j++)
-		{
-			if (sprBUff.getGlobalBounds().intersects(blocksIndestr[j].getBound()))
-			{
-				possibility = false;
-				break;
-			}
-		}
-		if (possibility == false)
-		{
-			break;
-		}
-		for (int j = 0; j < blocksDestr.size(); j++)
-		{
-			if (sprBUff.getGlobalBounds().intersects(blocksDestr.at(j)->getBound()))
-			{
-				vRuined.push_back(new Ruined(blocksDestr.at(j)->getSprite().getPosition().x, blocksDestr.at(j)->getSprite().getPosition().y));
-				delete blocksDestr.at(j);
-				blocksDestr.erase(blocksDestr.begin() + j);
-				j--;
-				possibility = false;
-				break;
-			}
-		}
-		if (possibility == false)
-		{
-			break;
-		}
-		if (fireSize - 1 != i)
-		{
-			vFire.push_back(new BotFire(buffX, buffY));
-		}
-		else
-		{
-			vFire.push_back(new TongueBot(buffX, buffY));
-		}
-	}
-	return vFire;
-}
- Game * Game::getInstance()
+Game* Game::getInstance()
 {
 	if (game == nullptr)
 	{
@@ -235,24 +17,48 @@ Game::Game()
 	}
 	return game;
 }
- void Game::mainMethod()
+void Game::setGameParameters()
 {
-	//set Window param
-	sf::RenderWindow window(sf::VideoMode(600, 600), "Bomberman");										
+	// Load resources
+	imageBlocks.loadFromFile("blocks.png");
+	imgRuined.loadFromFile("ruined.png");
+	imageFone.loadFromFile("fone2.png");
+	imageHero.loadFromFile("image.png");
+	imageBomb.loadFromFile("bomb.png");
+	imgBoost.loadFromFile("bigBoom.png");
+
+	fone.setTexture(imageFone);
+	player.setTexture(imageHero);
+	
+	textureBlocks.loadFromImage(imageBlocks);
+	
+	sprFire.setTextureRect(sf::IntRect(0, 0, UNIT_SIZE - LITTLE_BIT * 2, UNIT_SIZE - LITTLE_BIT * 2));
+
+	// Create window. Set parameters
+	window.create(sf::VideoMode(600, 600), "Bomberman");
 	window.setFramerateLimit(60);
 	srand(time(0));
+}
+void Game::setLevelParameters()
+{
+	blocksIndestrSize = 36;
+	moveSpeed = 1.3;
+	bomb—ount = 2;
+	fireSize = 1;
+	monstersCount = 5;
+	maxPosForDestrBlocks = 131;
+	deathHero = nullptr;
 
-	//set indestructible blocks
-	blocksIndestr = new Indestructible[blocksIndestrSize];												
+	// set indestructible blocks
+	blocksIndestr = new Indestructible[blocksIndestrSize];
 	for (int i = 0; i < blocksIndestrSize; i++)
 	{
 		blocksIndestr[i] = Indestructible(i, &textureBlocks);
-
 	}
 
 
-	//set destructible blocks
-	for (int i = 0, pos = 1; pos <= maxPosForDestrBlocks; i++)										
+	// set destructible blocks
+	for (int i = 0, pos = 1; pos <= maxPosForDestrBlocks; i++)
 	{
 		if (rand() % 2 == 0)
 		{
@@ -264,40 +70,254 @@ Game::Game()
 		}
 		pos++;
 		blocksDestr.push_back(new Destructible(&textureBlocks, pos));
-
 	}
-	//rand pos for dors behind block, set it;
-	int *numb_block_for_dor = new int;
-	*numb_block_for_dor = rand() % blocksDestr.size();													
-	door = new Door(blocksDestr.at(*numb_block_for_dor)->getSprite().getPosition().x, blocksDestr.at(*numb_block_for_dor)->getSprite().getPosition().y);
-	
-	//rand pos for boost behind block, set it;
-	int* numb_block_for_boost = new int;
-	do {
-		*numb_block_for_boost = rand() % blocksDestr.size();
-	} while (*numb_block_for_dor == *numb_block_for_boost);
-	boost = new Boost(blocksDestr.at(*numb_block_for_boost)->getSprite().getPosition().x, blocksDestr.at(*numb_block_for_boost)->getSprite().getPosition().y);
-	delete numb_block_for_dor, numb_block_for_boost;
+	// rand pos for dors behind block, set it;
+	int* numbBlockForDor = new int;
+	*numbBlockForDor = rand() % blocksDestr.size();
+	door = new Door(blocksDestr.at(*numbBlockForDor)->getSprite().getPosition().x, blocksDestr.at(*numbBlockForDor)->getSprite().getPosition().y);
 
-	//set monsters;
-	vMonsters.clear();																					
+	// rand pos for boost behind block, set it;
+	int* numbBlockForBoost = new int;
+	do {
+		*numbBlockForBoost = rand() % blocksDestr.size();
+	} while (*numbBlockForDor == *numbBlockForBoost);
+	boost = new Boost(blocksDestr.at(*numbBlockForBoost)->getSprite().getPosition().x, blocksDestr.at(*numbBlockForBoost)->getSprite().getPosition().y, imgBoost);
+	delete numbBlockForDor, numbBlockForBoost;
+
+	// set monsters;
+	vMonsters.clear();
 	for (int i = 0; i < monstersCount; i++)
-	{		
+	{
 		vMonsters.push_back(new SimpleMonster(blocksIndestr, blocksIndestrSize, blocksDestr));
 	}
 
+	// set player characteristics
+	player.setMS(moveSpeed);
+	player.setBombCount(bomb—ount);
+	isAlive = true;
+};
+ std::vector<Fire*> Game::getNewFire(int x, int y)
+{
+	
+	//fire centr
+	int fireX = x, fireY = y;
+	bool possibility = true;
+	vFire.clear();
+	vFire.push_back(new MainFire(x, y));
+	//fire right
+	for (int i = 0; i < fireSize; i++)
+	{
+		fireX += UNIT_SIZE;
 
-	//set player characteristics
-	player1.setMS(moveSpeed);
-	player1.setBombCount(bomb_coumt);
-	live = true;
-	//main game cycle
+		sprFire.setPosition(fireX + LITTLE_BIT, fireY + LITTLE_BIT);
+		if (sprFire.getGlobalBounds().intersects(wall.getRightBound()))
+		{
+			break;
+		}
+		for (int j = 0; j < blocksIndestrSize; j++)
+		{
+			if (sprFire.getGlobalBounds().intersects(blocksIndestr[j].getBound()))
+			{
+				possibility = false;
+				break;
+			}
+		}
+		if (possibility == false)
+		{
+			break;
+		}
+		for (int j = 0; j < blocksDestr.size(); j++)
+		{
+			if (sprFire.getGlobalBounds().intersects(blocksDestr.at(j)->getBound()))
+			{
+				vRuined.push_back(new Ruined(blocksDestr.at(j)->getSprite().getPosition().x, blocksDestr.at(j)->getSprite().getPosition().y, imgRuined));
+				delete blocksDestr.at(j);
+				blocksDestr.erase(blocksDestr.begin() + j);
+				j--;
+				possibility = false;
+				break;
+			}
+		}
+		if (possibility == false)
+		{
+			break;
+		}
+
+		if (fireSize - 1 != i)
+		{
+			vFire.push_back(new RightFire(fireX, fireY));
+		}
+		else
+		{
+			vFire.push_back(new TongueRight(fireX, fireY));
+		}
+	}
+	//fire left
+	fireX = x;
+	possibility = true;
+	for (int i = 0; i < fireSize; i++)
+	{
+		fireX -= UNIT_SIZE;
+
+		sprFire.setPosition(fireX + LITTLE_BIT, fireY + LITTLE_BIT);
+		if (sprFire.getGlobalBounds().intersects(wall.getLeftBound()))
+		{
+			break;
+		}
+		for (int j = 0; j < blocksIndestrSize; j++)
+		{
+			if (sprFire.getGlobalBounds().intersects(blocksIndestr[j].getBound()))
+			{
+				possibility = false;
+				break;
+			}
+		}
+		if (possibility == false)
+		{
+			break;
+		}
+		for (int j = 0; j < blocksDestr.size(); j++)
+		{
+			if (sprFire.getGlobalBounds().intersects(blocksDestr.at(j)->getBound()))
+			{
+				vRuined.push_back(new Ruined(blocksDestr.at(j)->getSprite().getPosition().x, blocksDestr.at(j)->getSprite().getPosition().y, imgRuined));
+				delete blocksDestr.at(j);
+				blocksDestr.erase(blocksDestr.begin() + j);
+				j--;
+				possibility = false;
+				break;
+			}
+		}
+		if (possibility == false)
+		{
+			break;
+		}
+
+		if (fireSize - 1 != i)
+		{
+			vFire.push_back(new LeftFire(fireX, y));
+		}
+		else
+		{
+			vFire.push_back(new TongueLeft(fireX, y));
+		}
+	}
+	//fire top
+	fireX = x;
+	possibility = true;
+	for (int i = 0; i < fireSize; i++)
+	{
+		fireY -= UNIT_SIZE;
+		sprFire.setPosition(fireX + LITTLE_BIT, fireY + LITTLE_BIT);
+		if (sprFire.getGlobalBounds().intersects(wall.getUpBound()))
+		{
+			break;
+		}
+		for (int j = 0; j < blocksIndestrSize; j++)
+		{
+			if (sprFire.getGlobalBounds().intersects(blocksIndestr[j].getBound()))
+			{
+				possibility = false;
+				break;
+			}
+		}
+		if (possibility == false)
+		{
+			break;
+		}
+		for (int j = 0; j < blocksDestr.size(); j++)
+		{
+			if (sprFire.getGlobalBounds().intersects(blocksDestr.at(j)->getBound()))
+			{
+				vRuined.push_back(new Ruined(blocksDestr.at(j)->getSprite().getPosition().x, blocksDestr.at(j)->getSprite().getPosition().y, imgRuined));
+				delete blocksDestr.at(j);
+				blocksDestr.erase(blocksDestr.begin() + j);
+				possibility = false;
+				break;
+			}
+		}
+		if (possibility == false)
+		{
+			break;
+		}
+
+		if (fireSize - 1 != i)
+		{
+			vFire.push_back(new TopFire(x, fireY));
+		}
+		else
+		{
+			vFire.push_back(new TongueTop(x, fireY));
+		}
+	}
+	//fire bot
+	fireY = y;
+	possibility = true;
+	for (int i = 0; i < fireSize; i++)
+	{
+		fireY += UNIT_SIZE;
+		sprFire.setPosition(fireX + LITTLE_BIT, fireY + LITTLE_BIT);
+		if (sprFire.getGlobalBounds().intersects(wall.getDownBound()))
+		{
+			break;
+		}
+		for (int j = 0; j < blocksIndestrSize; j++)
+		{
+			if (sprFire.getGlobalBounds().intersects(blocksIndestr[j].getBound()))
+			{
+				possibility = false;
+				break;
+			}
+		}
+		if (possibility == false)
+		{
+			break;
+		}
+		for (int j = 0; j < blocksDestr.size(); j++)
+		{
+			if (sprFire.getGlobalBounds().intersects(blocksDestr.at(j)->getBound()))
+			{
+				vRuined.push_back(new Ruined(blocksDestr.at(j)->getSprite().getPosition().x, blocksDestr.at(j)->getSprite().getPosition().y, imgRuined));
+				delete blocksDestr.at(j);
+				blocksDestr.erase(blocksDestr.begin() + j);
+				j--;
+				possibility = false;
+				break;
+			}
+		}
+		if (possibility == false)
+		{
+			break;
+		}
+		if (fireSize - 1 != i)
+		{
+			vFire.push_back(new BotFire(fireX, fireY));
+		}
+		else
+		{
+			vFire.push_back(new TongueBot(fireX, fireY));
+		}
+	}
+	return vFire;
+}
+
+
+ void Game::mainMethod()
+{
+
+
+
+	setGameParameters();
+	setLevelParameters();
+
+
+	// Main game cycle
 	while (window.isOpen())
 	{
-		//set time(game speed)
-		timeG = clock1.getElapsedTime().asMicroseconds();
-		clock1.restart();
-		timeG = timeG / 10000;
+		// Set time(game speed)
+		timeGame = clock.getElapsedTime().asMicroseconds();
+		clock.restart();
+		timeGame = timeGame / 10000;
 
 		sf::Event Event;
 		while (window.pollEvent(Event))
@@ -305,19 +325,68 @@ Game::Game()
 			if (Event.type == sf::Event::Closed)
 				window.close();
 		}
-		//Move hero and bomb placing
-		if (live == true)
+
+		// Logic
+		// Move hero and bomb placing
+		if (isAlive == true)
 		{
-			player1.move(blocksIndestr, blocksIndestrSize, blocksDestr, vBombs, timeG, wall);
+			player.move(blocksIndestr, blocksIndestrSize, blocksDestr, vBombs, timeGame, wall);
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
 			{
-				if ((Bomb::getCountBomb() == 0) || (Bomb::getCountBomb() < player1.getBombCount() && !player1.GetInvSprite().getGlobalBounds().intersects(vBombs.back()->getBounds())))
+				if ((Bomb::getCountBomb() == 0) || (Bomb::getCountBomb() < player.getBombCount() && !player.GetInvSprite().getGlobalBounds().intersects(vBombs.back()->getBounds())))
 				{
-					vBombs.push_back(new Bomb(player1.GetInvSprite().getPosition().x, player1.GetInvSprite().getPosition().y));
+					vBombs.push_back(new Bomb(player.GetInvSprite().getPosition().x, player.GetInvSprite().getPosition().y, imageBomb));
 				}
 			}
 		}
-		//Draw
+		// Fire + bomb
+		if (!vvFire.empty())  
+		{
+			for (size_t k = 0; k < vvFire.size(); k++)
+			{
+				for (size_t i = 0; i < vvFire.at(k).size(); i++)
+				{
+					for (size_t j = 0; j < vBombs.size(); j++)
+					{
+						if (vvFire.at(k).at(i)->getSprite().getGlobalBounds().intersects(vBombs.at(j)->getInvBounds()))
+						{
+							vBombs.at(j)->setTime(3);
+
+							break;
+						}
+					}
+				}
+			}
+		}
+		// Fire + Hero
+		if (!vvFire.empty()) 
+		{
+			for (size_t k = 0; k < vvFire.size(); k++)
+			{
+				for (size_t i = 0; i < vvFire.at(k).size(); i++)
+				{
+					if (vvFire.at(k).at(i)->getSprite().getGlobalBounds().intersects(player.GetInvSprite().getGlobalBounds()))
+					{
+						isAlive = false;
+						break;
+					}
+				}
+			}
+		}
+		for (int i = 0; i < vMonsters.size(); i++)
+		{
+			if (vMonsters.at(i)->getBounds().intersects(player.GetInvSprite().getGlobalBounds()))
+			{
+				isAlive = false;
+				break;
+			}
+		}
+		if (deathHero == nullptr && isAlive == false)
+		{
+			deathHero = new DeathHero(player.GetInvSprite().getPosition().x, player.GetInvSprite().getPosition().y);
+
+		}
+		// Draw
 		window.clear(sf::Color::Black);
 		window.draw(fone.getSprite());
 		for (int i = 0; i < blocksIndestrSize; i++)
@@ -328,13 +397,13 @@ Game::Game()
 		if (boost)
 		{
 			window.draw(boost->getSprite());
-			if (player1.GetInvSprite().getGlobalBounds().intersects(boost->getBound()))
+			if (player.GetInvSprite().getGlobalBounds().intersects(boost->getBound()))
 			{
 				delete boost;
 				boost = nullptr;
 				fireSize++;
 			}
-			
+
 		}
 		for (int i = 0; i < blocksDestr.size(); i++)
 		{
@@ -345,14 +414,14 @@ Game::Game()
 		window.draw(wall.getSpriteLeft());
 		if (deathHero == nullptr)
 		{
-			window.draw(player1.GetSprite());
+			window.draw(player.GetSprite());
 		}
 		window.draw(wall.getSpriteDown());
 		window.draw(wall.getSpriteRight());
-		//Bomb animation
-		for (int i = 0; i < vBombs.size(); i++)             
+		// Bomb animation
+		for (int i = 0; i < vBombs.size(); i++)
 		{
-			if (!vBombs[i]->isBombAlive(timeG))
+			if (!vBombs[i]->isBombAlive(timeGame))
 			{
 				vvFire.push_back(getNewFire(vBombs[i]->getSprite().getPosition().x, vBombs[i]->getSprite().getPosition().y));
 				delete vBombs[i];
@@ -363,8 +432,8 @@ Game::Game()
 				window.draw(vBombs[i]->getSprite());
 			}
 		}
-		//Fire! Abd animation!
-		for (int i = 0; i < vvFire.size(); i++)			
+		// Fire! Abd animation!
+		for (int i = 0; i < vvFire.size(); i++)
 		{
 			if (vvFire[i].at(0)->fireInTheHall())
 			{
@@ -385,8 +454,8 @@ Game::Game()
 			}
 
 		}
-		//Extermination! And animation
-		for (int i = 0; i < vRuined.size(); i++)             
+		// Extermination! And animation
+		for (int i = 0; i < vRuined.size(); i++)
 		{
 			if (!vRuined[i]->destruction())
 			{
@@ -394,14 +463,14 @@ Game::Game()
 				delete vRuined[i];
 				vRuined.erase(vRuined.begin() + i);
 
-			}  
+			}
 			else
 			{
-				window.draw(vRuined[i]->getSprite()); 
+				window.draw(vRuined[i]->getSprite());
 			}
 		}
-		//Monster move and death
-		if (!vMonsters.empty()) 
+		// Monster move and death
+		if (!vMonsters.empty())
 		{
 			for (size_t j = 0; j < vMonsters.size(); j++)
 			{
@@ -414,103 +483,58 @@ Game::Game()
 						{
 							if (vvFire.at(k).at(i)->getSprite().getGlobalBounds().intersects(vMonsters.at(j)->getBounds()))
 							{
-								vDeathMonster.push_back(new DeathSimpleMomster(vMonsters.at(j)->getSprite().getPosition().x, vMonsters.at(j)->getSprite().getPosition().y));
+								vDeadMonster.push_back(new DeathSimpleMomster(vMonsters.at(j)->getSprite().getPosition().x, vMonsters.at(j)->getSprite().getPosition().y));
 								delete vMonsters.at(j);
 								vMonsters.erase(vMonsters.begin() + j);
 								death = true;
 								break;
 							}
 						}
-						
+
 					}
 				}
 				if (!death)
 				{
-					vMonsters.at(j)->move(blocksIndestr, blocksIndestrSize, blocksDestr, timeG, vBombs, wall);
+					vMonsters.at(j)->move(blocksIndestr, blocksIndestrSize, blocksDestr, timeGame, vBombs, wall);
 					window.draw(vMonsters.at(j)->getSprite());
 				}
 			}
-				
-		}
-		//Logics
-		//Fire + bomb
-		if (!vvFire.empty())  
-		{
-			for (size_t k = 0; k < vvFire.size(); k++)
-			{
-				for (size_t i = 0; i < vvFire.at(k).size(); i++)
-				{
-					for (size_t j = 0; j < vBombs.size(); j++)
-					{
-						if (vvFire.at(k).at(i)->getSprite().getGlobalBounds().intersects(vBombs.at(j)->getInvBounds()))
-						{
-							vBombs.at(j)->setTime(3);
-
-							break;
-						}
-					}
-				}
-			}
-		}
-		//Fire + Hero
-		if (!vvFire.empty()) 
-		{
-			for (size_t k = 0; k < vvFire.size(); k++)
-			{
-				for (size_t i = 0; i < vvFire.at(k).size(); i++)
-				{
-					if (vvFire.at(k).at(i)->getSprite().getGlobalBounds().intersects(player1.GetInvSprite().getGlobalBounds()))
-					{
-						live = false;
-						break;
-					}
-				}
-			}
-		}
-		for (int i = 0; i < vMonsters.size(); i++)
-		{
-			if (vMonsters.at(i)->getBounds().intersects(player1.GetInvSprite().getGlobalBounds()))
-			{
-				live = false;
-				break;
-			}
-		}
-		if (deathHero == nullptr && live == false)
-		{
-			deathHero = new DeathHero(player1.GetInvSprite().getPosition().x, player1.GetInvSprite().getPosition().y);
 
 		}
-		//drow deathMonster
-		if (!vDeathMonster.empty()) 
+		// Drow dead monster
+		if (!vDeadMonster.empty()) 
 		{	
-			for (int i = 0; i < vDeathMonster.size(); i++)
+			for (int i = 0; i < vDeadMonster.size(); i++)
 			{
-				if (vDeathMonster.at(i)->sweetDeath())
+				if (vDeadMonster.at(i)->sweetDeath())
 				{
-					window.draw(vDeathMonster.at(i)->getSprite());
+					window.draw(vDeadMonster.at(i)->getSprite());
 				}
 				else
 				{
-					delete vDeathMonster.at(i);
-					vDeathMonster.erase(vDeathMonster.begin() + i);
+					delete vDeadMonster.at(i);
+					vDeadMonster.erase(vDeadMonster.begin() + i);
 					break;
 				}
 
 			}
 		}
+		// Drow dead hero
 		if (deathHero != nullptr)
 		{
 			window.draw(deathHero->getSprite());
 		}
 		if (deathHero != nullptr && !deathHero->bitterDeath())
 		{
+			std::cout << "tyt/n";
+			system("pause");
 			door->~Door();
 			break;
 		}
-		
-		if (player1.GetInvSprite().getGlobalBounds().intersects(door->getBound()) && vMonsters.empty())
+		// Level won
+		if (player.GetInvSprite().getGlobalBounds().intersects(door->getBound()) && vMonsters.empty())
 		{
-			//next lvl()
+			// next lvl
 			break;
 		}
 		window.display();

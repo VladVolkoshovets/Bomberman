@@ -6,13 +6,14 @@ class Ruined
 public:
 	Ruined();
 	~Ruined();
-	Ruined(int, int);
+	Ruined(int, int, sf::Image);
 	bool destruction();
 	sf::Sprite getSprite();
 private:
-	sf::Image imgRuined;
+	
 	sf::Texture txtRuined;
 	sf::Sprite sprRuined;
 	sf::Clock time;
 	unsigned short currentFrame;
+	unsigned short animationSpeed;
 };

@@ -9,43 +9,43 @@ Monster::~Monster()
 void Monster::setPosition(Blocks * indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV)
 {
 	sf::Sprite greenZone;
-	greenZone.setTextureRect(sf::IntRect(0, 0, unitSize*4, unitSize*4));
-	greenZone.setPosition(unitSize, unitSize);
+	greenZone.setTextureRect(sf::IntRect(0, 0, UNIT_SIZE*4, UNIT_SIZE*4));
+	greenZone.setPosition(UNIT_SIZE, UNIT_SIZE);
 	int x, y;
-	bool seted;
+	bool isSeted;
 	
 	do
 	{
-		seted = 1;
+		isSeted = true;
 		x = rand() % 13;
 		y = rand() % 13;
-		invSprite.setPosition(unitSize + unitSize * x + 2, unitSize + unitSize * y + 2);
+		invSprite.setPosition(UNIT_SIZE + UNIT_SIZE * x + 2, UNIT_SIZE + UNIT_SIZE * y + 2);
 		for (size_t i = 0; i < sizeIndestBlocks; i++)
 		{
 			if (invSprite.getGlobalBounds().intersects(indestBlocksArr[i].getBound()))
 			{
-				seted = 0;
+				isSeted = 0;
 				break;
 			}
 		}
-		if (seted == 1)
+		if (isSeted == 1)
 		{
 			for (size_t i = 0; i < destBlocksV.size(); i++)
 			{
 				if (invSprite.getGlobalBounds().intersects(destBlocksV.at(i)->getBound()))
 				{
-					seted = 0;
+					isSeted = 0;
 					break;
 				}
 			}
 		}
-		if (seted == 1 && invSprite.getGlobalBounds().intersects(greenZone.getGlobalBounds()))
+		if (isSeted == 1 && invSprite.getGlobalBounds().intersects(greenZone.getGlobalBounds()))
 		{
-			seted = 0;
+			isSeted = 0;
 		}
 	
-	} while (seted == false);
-	spriteMonster.setPosition(unitSize + unitSize*x, unitSize + unitSize*y);
+	} while (isSeted == false);
+	spriteMonster.setPosition(UNIT_SIZE + UNIT_SIZE*x, UNIT_SIZE + UNIT_SIZE*y);
 }
 sf::Sprite Monster::getSprite()
 {

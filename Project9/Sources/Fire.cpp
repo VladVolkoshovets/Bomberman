@@ -1,7 +1,7 @@
 #include"../Headers/Fire.h"
 Fire::Fire()
 {
-
+	
 }
 Fire::Fire(int x, int y)
 {

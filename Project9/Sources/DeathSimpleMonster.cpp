@@ -5,7 +5,7 @@ DeathSimpleMomster::DeathSimpleMomster(int x, int y)
 	textureDeath.loadFromImage(imageDeath);
 	spriteDeath.setTexture(textureDeath);
 	spriteDeath.setTextureRect(sf::IntRect(0, 0, 66, 66));
-	spriteDeath.setScale(unitSize / 66. + 0.00001, unitSize / 66. + 0.00001);
+	spriteDeath.setScale(UNIT_SIZE / 66. + 0.00001, UNIT_SIZE / 66. + 0.00001);
 	spriteDeath.setPosition(x, y);
 	//time.restart();
 }

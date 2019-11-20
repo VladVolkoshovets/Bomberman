@@ -119,6 +119,18 @@
     <Image Include="bigBoom.jpg">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="ruined.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="monster_death.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="monster.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="bigBoom.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="x64\Release\sfml-graphics-2.dll" />

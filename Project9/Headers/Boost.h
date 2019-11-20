@@ -3,13 +3,12 @@
 class Boost
 {
 public:
-	Boost(int, int);
+	Boost(int, int, sf::Image boostImg);
 	~Boost();
 	sf::Sprite getSprite() const;
 	sf::FloatRect getBound() const;
 
 private:
-	sf::Image* boostImg;
 	sf::Texture* boostTxt;
 	sf::Sprite* boostSpr;
 	sf::Sprite* invSpr;

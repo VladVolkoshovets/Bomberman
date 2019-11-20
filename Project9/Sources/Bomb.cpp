@@ -1,7 +1,7 @@
 #include"../Headers/Bomb.h"
-Bomb::Bomb(int x, int y)
+Bomb::Bomb(int x, int y, sf::Image imageBomb)
 {
-	imageBomb.loadFromFile("bomb.png");
+	
 	textureBomb.loadFromImage(imageBomb);
 	spriteBomb.setTexture(textureBomb);
 	spriteBomb.setTextureRect(sf::IntRect(0, 0, 66, 66));

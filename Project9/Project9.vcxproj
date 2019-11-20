@@ -159,10 +159,14 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="bigBoom.jpg" />
+    <Image Include="bigBoom.png" />
     <Image Include="blocks.png" />
     <Image Include="bomb.png" />
     <Image Include="fire.png" />
     <Image Include="image.png" />
+    <Image Include="monster.png" />
+    <Image Include="monster_death.png" />
+    <Image Include="ruined.png" />
     <Image Include="wall.jpg" />
   </ItemGroup>
   <ItemGroup>

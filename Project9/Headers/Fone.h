@@ -6,9 +6,9 @@ class Fone
 public:
 	Fone();
 	~Fone();
+	void setTexture(sf::Image);
 	sf::Sprite getSprite();
 private:
-	sf::Image imageFone;
 	sf::Texture textureFone;
 	sf::Sprite spriteFone;
 };

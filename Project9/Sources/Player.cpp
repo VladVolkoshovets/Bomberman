@@ -1,13 +1,7 @@
 #include"../Headers/Player.h"
 
-
-
-
-
 Player::Player()
 {
-	imageMain.loadFromFile("image.png");
-	textureMain.loadFromImage(imageMain);
 	spriteHero.setTexture(textureMain);
 	spriteHero.setTextureRect(sf::IntRect(0, 0, 18, 21));
 	spriteHero.setScale(sf::Vector2f(2.223, 2.239));
@@ -22,6 +16,10 @@ Player::Player()
 }
 Player::~Player()
 {
+}
+void Player::setTexture(sf::Image imageHero)
+{
+	textureMain.loadFromImage(imageHero);
 }
 sf::Sprite Player::GetSprite()
 {

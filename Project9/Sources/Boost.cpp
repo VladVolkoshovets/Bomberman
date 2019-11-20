@@ -1,8 +1,8 @@
 #include "../Headers/Boost.h"
-Boost::Boost(int x, int y) 
+Boost::Boost(int x, int y, sf::Image boostImg)
 {
 	boostTxt = new sf::Texture;
-	boostTxt->loadFromFile("bigBoom.png");
+	boostTxt->loadFromImage (boostImg);
 	boostSpr = new sf::Sprite;
 	invSpr = new sf::Sprite;
 	boostSpr->setTexture(*boostTxt);

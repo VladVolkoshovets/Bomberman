@@ -18,21 +18,21 @@ void Destructible::setPos(int i)
 	if (i <= 11)
 	{
 		column = i;
-		spriteBlocks->setPosition(2 * unitSize + unitSize * column, unitSize);
+		spriteBlocks->setPosition(2 * UNIT_SIZE + UNIT_SIZE * column, UNIT_SIZE);
 	}
 	else if (i <= 89)
 	{
 		i -= 12;
 		column = i % 13;
 		row = (i / 13) * 2;
-		spriteBlocks->setPosition(unitSize + unitSize * column, unitSize * 3 + unitSize*row);
+		spriteBlocks->setPosition(UNIT_SIZE + UNIT_SIZE * column, UNIT_SIZE * 3 + UNIT_SIZE*row);
 	}
 	else if (i <= 131)
 	{
 		i = i - 90;
 		column = i % 7;
 		row = i / 7;
-		spriteBlocks->setPosition(unitSize + unitSize * 2 * column, unitSize * 2 + unitSize * 2 * row);
+		spriteBlocks->setPosition(UNIT_SIZE + UNIT_SIZE * 2 * column, UNIT_SIZE * 2 + UNIT_SIZE * 2 * row);
 	}
 
 

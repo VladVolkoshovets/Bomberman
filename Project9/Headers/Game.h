@@ -32,17 +32,22 @@
 class Game
 {
 private:
+	Game();
 	static Game* game;
+	sf::RenderWindow window;
 	sf::Image imageBlocks;
+	sf::Image imgRuined;
+	sf::Image imageFone;
+	sf::Image imageHero;
+	sf::Image imageBomb;
+	sf::Image imgBoost;
 	sf::Texture textureBlocks;
-
-	static float timeG;
+	static float timeGame;
 	float moveSpeed;
-	unsigned short bomb_coumt;
+	unsigned short bombСount;
 	unsigned short fireSize;
-	int heroDirection;
-	Player player1;
-	bool live;
+	Player player;
+	bool isAlive;
 	Fone fone;
 	Wall wall;
 	Blocks *blocksIndestr;
@@ -53,18 +58,19 @@ private:
 	std::vector<Fire*> vFire;
 	std::vector<Ruined*> vRuined;
 	std::vector<Monster*> vMonsters;
-	std::vector<DeathMonster*> vDeathMonster;
+	std::vector<DeathMonster*> vDeadMonster;
 	int maxPosForDestrBlocks;
 	int monstersCount;
 	Door *door;
 	Boost *boost;
-	sf::Clock clock1;
-	sf::Sprite sprBUff;
-	const unsigned short LITTLE_BIT = 2; // для уникнення похибки накладдання спрайтів;
+	sf::Clock clock;
+	sf::Sprite sprFire;
 	bool death;
 	DeathHero *deathHero;
+	sf::Event Event;
 	
-	Game();
+	void setGameParameters();
+	void setLevelParameters();
 	
 	std::vector<Fire*> getNewFire(int x, int y);
 	

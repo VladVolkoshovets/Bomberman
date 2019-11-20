@@ -3,7 +3,7 @@
 class Bomb
 {
 public:
-	Bomb(int x, int y);
+	Bomb(int x, int y, sf::Image);
 	~Bomb();
 	bool isBombAlive(float time);
 	void setpos(int x, int y);
@@ -18,7 +18,7 @@ public:
 	bool getInvWentOut();
 	static unsigned short getCountBomb();
 private:
-	sf::Image imageBomb;
+	
 	sf::Texture textureBomb;
 	sf::Sprite spriteBomb;
 	sf::Sprite inviseBomb;
