@@ -3,12 +3,12 @@
 class DeathHero
 {
 public:
-	DeathHero(int, int);
+	DeathHero(int, int, sf::Image);
 	~DeathHero();
 	bool bitterDeath();
 	sf::Sprite getSprite();
 private:
-	sf::Image imageDeath;
+	
 	sf::Texture textureDeath;
 	sf::Sprite spriteDeath;
 	sf::Clock time;

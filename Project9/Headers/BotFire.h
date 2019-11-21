@@ -5,8 +5,8 @@ class BotFire : public Fire
 public:
 	BotFire();
 	~BotFire();
-	BotFire(int, int);
-	bool fireInTheHall();
+	BotFire(int, int, sf::Image imgFire);
+	bool isFireBurning();
 private:
 
 };

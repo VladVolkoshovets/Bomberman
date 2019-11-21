@@ -1,10 +1,8 @@
 #include"../Headers/SimpleMonster.h"
 
-SimpleMonster::SimpleMonster(Blocks * indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV)
+SimpleMonster::SimpleMonster(Blocks * indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, sf::Image imgMonster)
 {
-	
-	image.loadFromFile("monster.png");
-	texture.loadFromImage(image);
+	texture.loadFromImage(imgMonster);
 	spriteMonster.setTexture(texture);
 	spriteMonster.setTextureRect(sf::IntRect(0, 0, 66, 66));
 	spriteMonster.setScale(UNIT_SIZE/66., UNIT_SIZE/66.);
@@ -221,4 +219,3 @@ void SimpleMonster::move(Blocks * indestBlocksArr, unsigned short sizeIndestBloc
 		}
 	}
 }
-//MOVE INVSPR!!!

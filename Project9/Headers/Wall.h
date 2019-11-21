@@ -4,6 +4,7 @@ class  Wall
 {
 public:
 	Wall();
+	void setTexture(sf::Image);
 	sf::FloatRect getUpBound();
 	sf::FloatRect getLeftBound();
 	sf::FloatRect getRightBound();
@@ -14,7 +15,6 @@ public:
 	sf::Sprite getSpriteDown();
 	sf::Sprite getSpriteLeft();
 private:
-	sf::Image imageWall;
 	sf::Texture textureWall;
 	sf::Sprite wallLeft;
 	sf::Sprite wallUp;

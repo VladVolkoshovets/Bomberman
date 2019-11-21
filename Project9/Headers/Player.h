@@ -3,10 +3,9 @@
 #include"Blocks.h"
 #include"Bomb.h"
 #include"Wall.h"
-class  Player
+class  Hero
 {
 private:
-	const int MOVE_CORECTION = 20;
 	sf::Texture textureMain;
 	sf::Sprite spriteHero;
 	sf::Sprite spriteInvis;
@@ -16,14 +15,15 @@ private:
 	sf::FloatRect heroBounds;
 	int spriteCount;
 	bool needToReturn;
+	const int MOVE_CORECTION = 20;
 	void MoveUp(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall& wall);
 	void MoveDown(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall& wall);
 	void MoveLeft(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall& wall);
 	void MoveRight(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall& wall);
 
 public:
-	Player();
-	~Player();
+	Hero();
+	~Hero();
 	void setTexture(sf::Image);
 	sf::Sprite GetSprite();
 	sf::Sprite GetInvSprite();

@@ -5,8 +5,8 @@ class MainFire : public Fire
 {
 public:
 	MainFire();
-	MainFire(int, int);
-	bool fireInTheHall();
+	MainFire(int, int, sf::Image imgFire);
+	bool isFireBurning();
 	~MainFire();
 
 private:

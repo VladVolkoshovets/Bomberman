@@ -35,23 +35,26 @@ private:
 	Game();
 	static Game* game;
 	sf::RenderWindow window;
-	sf::Image imageBlocks;
+	sf::Image imgBlocks;
 	sf::Image imgRuined;
-	sf::Image imageFone;
-	sf::Image imageHero;
-	sf::Image imageBomb;
+	sf::Image imgFone;
+	sf::Image imgHero;
+	sf::Image imgBomb;
 	sf::Image imgBoost;
+	sf::Image imgWall;
+	sf::Image imgFire;
+	sf::Image imgMonster;
+	sf::Image imgDeathMonster;
 	sf::Texture textureBlocks;
-	static float timeGame;
+	static float timeElapsed;
+	unsigned short gameSpeed;
 	float moveSpeed;
 	unsigned short bomb—ount;
 	unsigned short fireSize;
-	Player player;
-	bool isAlive;
 	Fone fone;
 	Wall wall;
 	Blocks *blocksIndestr;
-	unsigned short blocksIndestrSize;
+	unsigned short blocksIndestrAmount;
 	std::vector<Blocks*> blocksDestr;
 	std::vector<Bomb*> vBombs;
 	std::vector<std::vector<Fire*>> vvFire;
@@ -65,15 +68,20 @@ private:
 	Boost *boost;
 	sf::Clock clock;
 	sf::Sprite sprFire;
-	bool death;
+	Hero hero;
+	bool isHeroAlive;
+	bool isGameOver;
 	DeathHero *deathHero;
-	sf::Event Event;
-	
+	sf::Event windowEvent;
+	bool loadingResources();
 	void setGameParameters();
 	void setLevelParameters();
-	
+	void generationLevel();
+	void timeBound();
+	bool isWidowOpen();
+	void logic();
+	void draw();
 	std::vector<Fire*> getNewFire(int x, int y);
-	
 
 public:
 	static Game* getInstance();

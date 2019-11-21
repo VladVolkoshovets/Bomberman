@@ -1,8 +1,8 @@
 #include"../Headers/Door.h"
-Door::Door(int x, int y) 
+Door::Door(int x, int y, sf::Image imgDoor)
 {
 	doorTxt = new sf::Texture;
-	doorTxt->loadFromFile("blocks.png");
+	doorTxt->loadFromImage(imgDoor);
 	doorSpr = new sf::Sprite;
 	invSpr = new sf::Sprite;
 	doorSpr->setTexture(*doorTxt);

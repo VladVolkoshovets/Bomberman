@@ -6,8 +6,8 @@ class TopFire : public Fire
 public:
 	TopFire();
 	~TopFire();
-	TopFire(int, int);
-	bool fireInTheHall();
+	TopFire(int, int, sf::Image imgFire);
+	bool isFireBurning();
 private:
 
 };

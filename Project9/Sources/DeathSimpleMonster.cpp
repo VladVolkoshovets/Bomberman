@@ -1,15 +1,13 @@
 #include"../Headers/DeathSimpleMonster.h"
-DeathSimpleMomster::DeathSimpleMomster(int x, int y)
+DeathSimpleMomster::DeathSimpleMomster(int x, int y, sf::Image imgDeathMonster)
 {
-	imageDeath.loadFromFile("monster_death.png");
-	textureDeath.loadFromImage(imageDeath);
+	textureDeath.loadFromImage(imgDeathMonster);
 	spriteDeath.setTexture(textureDeath);
 	spriteDeath.setTextureRect(sf::IntRect(0, 0, 66, 66));
 	spriteDeath.setScale(UNIT_SIZE / 66. + 0.00001, UNIT_SIZE / 66. + 0.00001);
 	spriteDeath.setPosition(x, y);
-	//time.restart();
 }
-bool DeathSimpleMomster::sweetDeath()
+bool DeathSimpleMomster::deathAnimation()
 {
 	if (time.getElapsedTime().asMilliseconds() > 1400)
 	{

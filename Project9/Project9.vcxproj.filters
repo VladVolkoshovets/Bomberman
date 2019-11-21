@@ -110,13 +110,7 @@
     <Image Include="fire.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="image.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="wall.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="bigBoom.jpg">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="ruined.png">
@@ -128,7 +122,13 @@
     <Image Include="monster.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="bigBoom.png">
+    <Image Include="hero.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="fireBoost.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="fone.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

@@ -7,7 +7,6 @@ Bomb::Bomb(int x, int y, sf::Image imageBomb)
 	spriteBomb.setTextureRect(sf::IntRect(0, 0, 66, 66));
 	spriteBomb.setScale(sf::Vector2f(0.6f, 0.6f));
 
-	sf::Image invTexture;
 
 	inviseBomb.setTextureRect(sf::IntRect(0, 0, 27, 27));
 	inviseBomb.setScale(sf::Vector2f(0.6f, 0.6f));
@@ -15,10 +14,7 @@ Bomb::Bomb(int x, int y, sf::Image imageBomb)
 	setpos(x, y);
 	bombBounds = spriteBomb.getGlobalBounds();
 	bombInvBounds = inviseBomb.getGlobalBounds();
-	wentOut = 0;
-	wentInvOut = 0;
-	currentFrame = 0;
-	lifeTimeSeconds = 0;
+	wentOut = false, wentInvOut = false, currentFrame = false, lifeTimeSeconds = false;
 }
 Bomb::~Bomb()
 {
@@ -31,7 +27,7 @@ bool Bomb::isBombAlive(float time)
 		return false;
 	}
 	lifeTimeSeconds = superTime.getElapsedTime().asSeconds();
-	//animation
+	// Animation
 	currentFrame += 0.03*time;
 	if (currentFrame >= 4)
 	{

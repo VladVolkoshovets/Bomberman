@@ -4,8 +4,8 @@ class TongueRight : public Fire
 {
 public:
 	TongueRight();
-	TongueRight(int x, int y);
-	bool fireInTheHall();
+	TongueRight(int x, int y, sf::Image imgFire);
+	bool isFireBurning();
 	~TongueRight();
 
 private:

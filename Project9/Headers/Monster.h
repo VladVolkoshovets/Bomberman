@@ -18,6 +18,6 @@ protected:
 	float moveSpeed;
 	sf::Sprite spriteMonster;
 	sf::Sprite invSprite;
-	//sf::Clock time;
 	void setPosition(Blocks * , unsigned short , std::vector<Blocks*> );
+	
 };

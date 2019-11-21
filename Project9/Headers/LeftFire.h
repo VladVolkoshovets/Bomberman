@@ -5,8 +5,8 @@ class LeftFire : public Fire
 public:
 	LeftFire();
 	~LeftFire();
-	LeftFire(int, int);
-	bool fireInTheHall();
+	LeftFire(int, int, sf::Image imgFire);
+	bool isFireBurning();
 private:
 
 };

@@ -3,9 +3,9 @@
 class DeathSimpleMomster : public DeathMonster
 {
 public:
-	DeathSimpleMomster(int, int);
+	DeathSimpleMomster(int, int, sf::Image);
 	~DeathSimpleMomster();
-	bool sweetDeath();
+	bool deathAnimation();
 	sf::Sprite getSprite();
 private:
 

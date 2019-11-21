@@ -1,9 +1,9 @@
 #include"../Headers/DeathHero.h"
 
-DeathHero::DeathHero(int x, int y)
+DeathHero::DeathHero(int x, int y, sf::Image imgDeathHero)
 {
-	imageDeath.loadFromFile("image.png");
-	textureDeath.loadFromImage(imageDeath);
+	
+	textureDeath.loadFromImage(imgDeathHero);
 	spriteDeath.setTexture(textureDeath);
 	spriteDeath.setTextureRect(sf::IntRect(118, 0, 20, 20));
 	spriteDeath.setScale(2., 2.);

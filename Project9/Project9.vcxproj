@@ -158,12 +158,12 @@
     <ClCompile Include="Sources\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="bigBoom.jpg" />
-    <Image Include="bigBoom.png" />
     <Image Include="blocks.png" />
     <Image Include="bomb.png" />
     <Image Include="fire.png" />
-    <Image Include="image.png" />
+    <Image Include="fireBoost.png" />
+    <Image Include="fone.png" />
+    <Image Include="hero.png" />
     <Image Include="monster.png" />
     <Image Include="monster_death.png" />
     <Image Include="ruined.png" />

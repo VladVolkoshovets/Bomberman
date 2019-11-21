@@ -3,7 +3,7 @@ Fire::Fire()
 {
 	
 }
-Fire::Fire(int x, int y)
+Fire::Fire(int x, int y, sf::Image imgFire)
 {
 
 }

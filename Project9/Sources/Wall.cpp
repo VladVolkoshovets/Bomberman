@@ -3,8 +3,7 @@ Wall::Wall()
 {
 	sizeWall = 600;
 	sizeBlock = 40;
-	imageWall.loadFromFile("wall.jpg");
-	textureWall.loadFromImage(imageWall);
+	
 	wallUp.setTexture(textureWall);
 	wallUp.setTextureRect(sf::IntRect(0, 0, 600, 40));
 	wallUp.setPosition(0, 0);
@@ -25,7 +24,10 @@ Wall::Wall()
 	wallDown.setPosition(0, sizeWall - sizeBlock);
 	downBounds = wallDown.getGlobalBounds();
 }
-
+void Wall::setTexture(sf::Image imageWall)
+{
+	textureWall.loadFromImage(imageWall);
+}
 sf::FloatRect Wall::getUpBound()
 {
 	return upBounds;

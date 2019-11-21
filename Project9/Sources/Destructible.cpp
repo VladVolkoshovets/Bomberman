@@ -34,10 +34,4 @@ void Destructible::setPos(int i)
 		row = i / 7;
 		spriteBlocks->setPosition(UNIT_SIZE + UNIT_SIZE * 2 * column, UNIT_SIZE * 2 + UNIT_SIZE * 2 * row);
 	}
-
-
-
-	//11 - перший ряд [1 . 11]
-	//6*13  3 5 7 9 11 13 ряд [12, 90]
-	//6*7  алгоритм як зверху лівіше на 40 і + стовепець [91, 131]
 }
