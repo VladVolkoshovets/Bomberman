@@ -8,7 +8,7 @@ class  Hero
 private:
 	sf::Texture textureMain;
 	sf::Sprite spriteHero;
-	sf::Sprite spriteInvis;
+	sf::Sprite spriteInvisible;
 	float moveSpeed;
 	unsigned short bombCount;
 	float currentFrame;

@@ -11,6 +11,6 @@ public:
 private:
 	sf::Texture* boostTxt;
 	sf::Sprite* boostSpr;
-	sf::Sprite* invSpr;
+	sf::Sprite* InvisibleSpr;
 };
 

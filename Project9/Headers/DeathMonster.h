@@ -7,6 +7,7 @@ class DeathMonster
 public:
 	DeathMonster();
 	~DeathMonster();
+	// Return false when animation is done 
 	virtual bool deathAnimation() = 0;
 	virtual sf::Sprite getSprite() = 0;
 protected:

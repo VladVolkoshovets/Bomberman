@@ -3,7 +3,6 @@
 class Blocks
 {
 protected:
-
 	sf::Sprite *spriteBlocks;
 	sf::FloatRect blockBounds;
 

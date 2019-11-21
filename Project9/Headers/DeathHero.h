@@ -5,7 +5,7 @@ class DeathHero
 public:
 	DeathHero(int, int, sf::Image);
 	~DeathHero();
-	bool bitterDeath();
+	bool isCompletelyDied();
 	sf::Sprite getSprite();
 private:
 	

@@ -1,32 +1,32 @@
 #include"../Headers/Bomb.h"
 Bomb::Bomb(int x, int y, sf::Image imageBomb)
 {
-	
 	textureBomb.loadFromImage(imageBomb);
 	spriteBomb.setTexture(textureBomb);
 	spriteBomb.setTextureRect(sf::IntRect(0, 0, 66, 66));
 	spriteBomb.setScale(sf::Vector2f(0.6f, 0.6f));
-
-
-	inviseBomb.setTextureRect(sf::IntRect(0, 0, 27, 27));
-	inviseBomb.setScale(sf::Vector2f(0.6f, 0.6f));
+	
+	invisibleBomb.setTextureRect(sf::IntRect(0, 0, 27, 27));
+	invisibleBomb.setScale(sf::Vector2f(0.6f, 0.6f));
 	countBomb++;
-	setpos(x, y);
+	setPos(x, y);
 	bombBounds = spriteBomb.getGlobalBounds();
-	bombInvBounds = inviseBomb.getGlobalBounds();
-	wentOut = false, wentInvOut = false, currentFrame = false, lifeTimeSeconds = false;
+	bombInvisibleBounds = invisibleBomb.getGlobalBounds();
+	isTimeWentOut = false, wentInvisibleOut = false, currentFrame = false, lifeTimeSeconds = false;
 }
 Bomb::~Bomb()
 {
 	countBomb--;
 }
-bool Bomb::isBombAlive(float time)
+
+bool Bomb::bombAnimation(float time)
 {
 	if (int(lifeTimeSeconds) >= 2.3)
 	{
 		return false;
 	}
-	lifeTimeSeconds = superTime.getElapsedTime().asSeconds();
+	lifeTimeSeconds = clock.getElapsedTime().asSeconds();
+
 	// Animation
 	currentFrame += 0.03*time;
 	if (currentFrame >= 4)
@@ -51,9 +51,8 @@ bool Bomb::isBombAlive(float time)
 		break;
 	}
 	return true;
-
 }
-void Bomb::setpos(int x, int y)
+void Bomb::setPos(int x, int y)
 {
 	if ((x % 40) < 20)
 	{
@@ -72,7 +71,7 @@ void Bomb::setpos(int x, int y)
 		y = (y - (y % 40)) + 40;
 	}
 	spriteBomb.setPosition(x, y);
-	inviseBomb.setPosition(x + 12, y + 12);
+	invisibleBomb.setPosition(x + 12, y + 12);
 }
 void Bomb::setTime(float seconds)
 {
@@ -84,7 +83,7 @@ sf::Sprite Bomb::getSprite()
 }
 sf::Sprite Bomb::getInvSprite()
 {
-	return inviseBomb;
+	return invisibleBomb;
 }
 sf::FloatRect Bomb::getBounds()
 {
@@ -93,23 +92,23 @@ sf::FloatRect Bomb::getBounds()
 }
 sf::FloatRect Bomb::getInvBounds()
 {
-	return bombInvBounds;
+	return bombInvisibleBounds;
 }
-void Bomb::setWentOut(bool wentOut)
+void Bomb::setIsTimeWentOut(bool isTimeWentOut)
 {
-	this->wentOut = wentOut;
+	this->isTimeWentOut = isTimeWentOut;
 }
-bool Bomb::getWentOut()
+bool Bomb::getIsTimeWentOut()
 {
-	return wentOut;
+	return isTimeWentOut;
 }
-void Bomb::setInvWentOut(bool wenInvOut)
+void Bomb::setInvisibleWentOut(bool wenInvOut)
 {
-	this->wentInvOut = wenInvOut;
+	this->wentInvisibleOut = wenInvOut;
 }
-bool Bomb::getInvWentOut()
+bool Bomb::getInvisibleWentOut()
 {
-	return wentInvOut;
+	return wentInvisibleOut;
 }
 unsigned short Bomb::getCountBomb()
 {

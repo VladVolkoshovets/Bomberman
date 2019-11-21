@@ -5,12 +5,12 @@ Hero::Hero()
 	spriteHero.setTexture(textureMain);
 	spriteHero.setTextureRect(sf::IntRect(0, 0, 18, 21));
 	spriteHero.setScale(sf::Vector2f(2.223, 2.239));
-	spriteInvis.setTextureRect(sf::IntRect(0, 0, 18, 18));
-	spriteInvis.setScale(sf::Vector2f(2.f, 2.f));
+	spriteInvisible.setTextureRect(sf::IntRect(0, 0, 18, 18));
+	spriteInvisible.setScale(sf::Vector2f(2.f, 2.f));
 	currentFrame = 0;
 	spriteCount = 0;
 	spriteHero.setPosition(40, 33);
-	spriteInvis.setPosition(42, 44);
+	spriteInvisible.setPosition(42, 44);
 	needToReturn = false;
 }
 Hero::~Hero()
@@ -26,7 +26,7 @@ sf::Sprite Hero::GetSprite()
 }
 sf::Sprite Hero::GetInvSprite()
 {
-	return spriteInvis;
+	return spriteInvisible;
 }
 void Hero::setMS(float moveSpeed)
 {
@@ -64,8 +64,8 @@ void Hero::MoveLeft(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, st
 	
 	// Moving
 	spriteHero.move(-moveSpeed * time, 0);
-	spriteInvis.move(-moveSpeed * time, 0);
-	heroBounds = spriteInvis.getGlobalBounds();
+	spriteInvisible.move(-moveSpeed * time, 0);
+	heroBounds = spriteInvisible.getGlobalBounds();
 	if (heroBounds.intersects(wall.getLeftBound()))
 	{
 		needToReturn = true;
@@ -78,19 +78,19 @@ void Hero::MoveLeft(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, st
 			if (heroBounds.intersects(indestBlocksArr[i].getBound()))
 			{
 				// Move. If the hero is not located between blocks, corrects
-				if (spriteInvis.getPosition().y + MOVE_CORECTION < indestBlocksArr[i].getSprite().getPosition().y)								
+				if (spriteInvisible.getPosition().y + MOVE_CORECTION < indestBlocksArr[i].getSprite().getPosition().y)								
 				{
 					spriteHero.move(moveSpeed * time, 0);																			
-					spriteInvis.move(moveSpeed * time, 0);
+					spriteInvisible.move(moveSpeed * time, 0);
 					MoveUp(indestBlocksArr, sizeIndestBlocks, destBlocksV, vBombs, time, wall);										
 					needToReturn = false;
 					break;
 
 				}
-				else if (spriteInvis.getPosition().y - MOVE_CORECTION > indestBlocksArr[i].getSprite().getPosition().y)
+				else if (spriteInvisible.getPosition().y - MOVE_CORECTION > indestBlocksArr[i].getSprite().getPosition().y)
 				{
 					spriteHero.move(moveSpeed * time, 0);
-					spriteInvis.move(moveSpeed * time, 0);
+					spriteInvisible.move(moveSpeed * time, 0);
 					MoveDown(indestBlocksArr, sizeIndestBlocks, destBlocksV, vBombs, time, wall);
 					needToReturn = false;
 					break;
@@ -113,7 +113,7 @@ void Hero::MoveLeft(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, st
 		}
 		for (int i = 0; i < Bomb::getCountBomb() && needToReturn == false; i++)
 		{
-			if ((heroBounds.intersects(vBombs[i]->getBounds()) && vBombs[i]->getWentOut()) || (heroBounds.intersects(vBombs[i]->getInvBounds()) && vBombs[i]->getInvWentOut()))
+			if ((heroBounds.intersects(vBombs[i]->getBounds()) && vBombs[i]->getIsTimeWentOut()) || (heroBounds.intersects(vBombs[i]->getInvBounds()) && vBombs[i]->getInvisibleWentOut()))
 			{
 				needToReturn = true;
 			}
@@ -122,7 +122,7 @@ void Hero::MoveLeft(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, st
 	if (needToReturn == true)
 	{
 		spriteHero.move(moveSpeed * time, 0);
-		spriteInvis.move(moveSpeed * time, 0);
+		spriteInvisible.move(moveSpeed * time, 0);
 	}
 }
 void Hero::MoveRight(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall& wall)
@@ -147,8 +147,8 @@ void Hero::MoveRight(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, s
 	}
 	spriteHero.setTextureRect(sf::IntRect(90, (int(currentFrame) - spriteCount) * 30, 18, 21));
 	spriteHero.move(moveSpeed * time, 0);
-	spriteInvis.move(moveSpeed * time, 0);
-	heroBounds = spriteInvis.getGlobalBounds();
+	spriteInvisible.move(moveSpeed * time, 0);
+	heroBounds = spriteInvisible.getGlobalBounds();
 	if (heroBounds.intersects(wall.getRightBound()))
 	{
 		needToReturn = true;
@@ -159,19 +159,19 @@ void Hero::MoveRight(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, s
 		{
 			if (heroBounds.intersects(indestBlocksArr[i].getBound()))
 			{
-				if (spriteInvis.getPosition().y + MOVE_CORECTION < indestBlocksArr[i].getSprite().getPosition().y)
+				if (spriteInvisible.getPosition().y + MOVE_CORECTION < indestBlocksArr[i].getSprite().getPosition().y)
 				{
 					spriteHero.move(-moveSpeed * time, 0);
-					spriteInvis.move(-moveSpeed * time, 0);
+					spriteInvisible.move(-moveSpeed * time, 0);
 					MoveUp(indestBlocksArr, sizeIndestBlocks, destBlocksV, vBombs, time, wall);
 					needToReturn = false;
 					break;
 
 				}
-				else if (spriteInvis.getPosition().y - MOVE_CORECTION > indestBlocksArr[i].getSprite().getPosition().y)
+				else if (spriteInvisible.getPosition().y - MOVE_CORECTION > indestBlocksArr[i].getSprite().getPosition().y)
 				{
 					spriteHero.move(-moveSpeed * time, 0);
-					spriteInvis.move(-moveSpeed * time, 0);
+					spriteInvisible.move(-moveSpeed * time, 0);
 					MoveDown(indestBlocksArr, sizeIndestBlocks, destBlocksV, vBombs, time, wall);
 					needToReturn = false;
 					break;
@@ -193,7 +193,7 @@ void Hero::MoveRight(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, s
 		}
 		for (int i = 0; i < Bomb::getCountBomb() && needToReturn == false; i++)
 		{
-			if ((heroBounds.intersects(vBombs[i]->getBounds()) && vBombs[i]->getWentOut()) || (heroBounds.intersects(vBombs[i]->getInvBounds()) && vBombs[i]->getInvWentOut()))
+			if ((heroBounds.intersects(vBombs[i]->getBounds()) && vBombs[i]->getIsTimeWentOut()) || (heroBounds.intersects(vBombs[i]->getInvBounds()) && vBombs[i]->getInvisibleWentOut()))
 			{
 				needToReturn = true;
 				break;
@@ -203,7 +203,7 @@ void Hero::MoveRight(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, s
 	if (needToReturn == true)
 	{
 		spriteHero.move(-moveSpeed * time, 0);
-		spriteInvis.move(-moveSpeed * time, 0);
+		spriteInvisible.move(-moveSpeed * time, 0);
 	}
 }
 void Hero::MoveUp(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall& wall)
@@ -228,8 +228,8 @@ void Hero::MoveUp(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std:
 	}
 	spriteHero.setTextureRect(sf::IntRect(60, (int(currentFrame) - spriteCount) * 30, 18, 21));
 	spriteHero.move(0, -moveSpeed * time);
-	spriteInvis.move(0, -moveSpeed * time);
-	heroBounds = spriteInvis.getGlobalBounds();
+	spriteInvisible.move(0, -moveSpeed * time);
+	heroBounds = spriteInvisible.getGlobalBounds();
 	if (heroBounds.intersects(wall.getUpBound()))
 	{
 		needToReturn = true;
@@ -240,18 +240,18 @@ void Hero::MoveUp(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std:
 		{
 			if (heroBounds.intersects(indestBlocksArr[i].getBound()))
 			{
-				if (spriteInvis.getPosition().x + MOVE_CORECTION < indestBlocksArr[i].getSprite().getPosition().x)
+				if (spriteInvisible.getPosition().x + MOVE_CORECTION < indestBlocksArr[i].getSprite().getPosition().x)
 				{
 					spriteHero.move(0, moveSpeed * time);
-					spriteInvis.move(0, moveSpeed * time);
+					spriteInvisible.move(0, moveSpeed * time);
 					MoveLeft(indestBlocksArr, sizeIndestBlocks, destBlocksV, vBombs, time, wall);
 					needToReturn = false;
 					break;
 				}
-				else if (spriteInvis.getPosition().x - MOVE_CORECTION > indestBlocksArr[i].getSprite().getPosition().x)
+				else if (spriteInvisible.getPosition().x - MOVE_CORECTION > indestBlocksArr[i].getSprite().getPosition().x)
 				{
 					spriteHero.move(0, moveSpeed * time);
-					spriteInvis.move(0, moveSpeed * time);
+					spriteInvisible.move(0, moveSpeed * time);
 					MoveRight(indestBlocksArr, sizeIndestBlocks, destBlocksV, vBombs, time, wall);
 					needToReturn = false;
 					break;
@@ -274,7 +274,7 @@ void Hero::MoveUp(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std:
 
 		for (int i = 0; i < Bomb::getCountBomb() && needToReturn == false; i++)
 		{
-			if ((heroBounds.intersects(vBombs[i]->getBounds()) && vBombs[i]->getWentOut()) || (heroBounds.intersects(vBombs[i]->getInvBounds()) && vBombs[i]->getInvWentOut()))
+			if ((heroBounds.intersects(vBombs[i]->getBounds()) && vBombs[i]->getIsTimeWentOut()) || (heroBounds.intersects(vBombs[i]->getInvBounds()) && vBombs[i]->getInvisibleWentOut()))
 			{
 				needToReturn = true;
 				break;
@@ -284,7 +284,7 @@ void Hero::MoveUp(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std:
 	if (needToReturn == true)
 	{
 		spriteHero.move(0, moveSpeed * time);
-		spriteInvis.move(0, moveSpeed * time);
+		spriteInvisible.move(0, moveSpeed * time);
 	}
 }
 
@@ -310,8 +310,8 @@ void Hero::MoveDown(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, st
 	}
 	spriteHero.setTextureRect(sf::IntRect(0, (int(currentFrame) - spriteCount) * 30, 18, 21));
 	spriteHero.move(0, moveSpeed * time);
-	spriteInvis.move(0, moveSpeed * time);
-	heroBounds = spriteInvis.getGlobalBounds();
+	spriteInvisible.move(0, moveSpeed * time);
+	heroBounds = spriteInvisible.getGlobalBounds();
 	if (heroBounds.intersects(wall.getDownBound()))
 	{
 		needToReturn = true;
@@ -322,18 +322,18 @@ void Hero::MoveDown(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, st
 		{
 			if (heroBounds.intersects(indestBlocksArr[i].getBound()))
 			{
-				if (spriteInvis.getPosition().x + MOVE_CORECTION < indestBlocksArr[i].getSprite().getPosition().x)
+				if (spriteInvisible.getPosition().x + MOVE_CORECTION < indestBlocksArr[i].getSprite().getPosition().x)
 				{
 					spriteHero.move(0, -moveSpeed * time);
-					spriteInvis.move(0, -moveSpeed * time);
+					spriteInvisible.move(0, -moveSpeed * time);
 					MoveLeft(indestBlocksArr, sizeIndestBlocks, destBlocksV, vBombs, time, wall);
 					needToReturn = false;
 					break;
 				}
-				else if (spriteInvis.getPosition().x - MOVE_CORECTION > indestBlocksArr[i].getSprite().getPosition().x)
+				else if (spriteInvisible.getPosition().x - MOVE_CORECTION > indestBlocksArr[i].getSprite().getPosition().x)
 				{
 					spriteHero.move(0, -moveSpeed * time);
-					spriteInvis.move(0, -moveSpeed * time);
+					spriteInvisible.move(0, -moveSpeed * time);
 					MoveRight(indestBlocksArr, sizeIndestBlocks, destBlocksV, vBombs, time, wall);
 					needToReturn = false;
 					break;
@@ -354,7 +354,7 @@ void Hero::MoveDown(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, st
 		}
 		for (int i = 0; i < Bomb::getCountBomb() && needToReturn == false; i++)
 		{
-			if ((heroBounds.intersects(vBombs[i]->getBounds()) && vBombs[i]->getWentOut()) || (heroBounds.intersects(vBombs[i]->getInvBounds()) && vBombs[i]->getInvWentOut()))
+			if ((heroBounds.intersects(vBombs[i]->getBounds()) && vBombs[i]->getIsTimeWentOut()) || (heroBounds.intersects(vBombs[i]->getInvBounds()) && vBombs[i]->getInvisibleWentOut()))
 			{
 				needToReturn = true;
 				break;
@@ -364,26 +364,26 @@ void Hero::MoveDown(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, st
 	if (needToReturn == true)
 	{
 		spriteHero.move(0, -moveSpeed * time);
-		spriteInvis.move(0, -moveSpeed * time);
+		spriteInvisible.move(0, -moveSpeed * time);
 	}
 }
 void Hero::move(Blocks * indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall & wall)
 {
 
 	needToReturn = true;
-	heroBounds = spriteInvis.getGlobalBounds();
+	heroBounds = spriteInvisible.getGlobalBounds();
 	for (int i = 0; i < Bomb::getCountBomb(); i++)
 	{
-		if (!vBombs[i]->getWentOut() && !heroBounds.intersects(vBombs[i]->getBounds()))
+		if (!vBombs[i]->getIsTimeWentOut() && !heroBounds.intersects(vBombs[i]->getBounds()))
 		{
-			vBombs[i]->setWentOut(true);
+			vBombs[i]->setIsTimeWentOut(true);
 		}
 	}
 	for (int i = 0; i < Bomb::getCountBomb(); i++)
 	{
-		if (!vBombs[i]->getInvWentOut() && !heroBounds.intersects(vBombs[i]->getInvBounds()))
+		if (!vBombs[i]->getInvisibleWentOut() && !heroBounds.intersects(vBombs[i]->getInvBounds()))
 		{
-			vBombs[i]->setInvWentOut(true);
+			vBombs[i]->setInvisibleWentOut(true);
 		}
 	}
 

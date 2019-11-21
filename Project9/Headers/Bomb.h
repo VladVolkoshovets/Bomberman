@@ -5,29 +5,29 @@ class Bomb
 public:
 	Bomb(int x, int y, sf::Image);
 	~Bomb();
-	bool isBombAlive(float time);
-	void setpos(int x, int y);
+	// Return false when animation is done 
+	bool bombAnimation(float time);
+	void setPos(int x, int y);
 	void setTime(float seconds);
 	sf::Sprite getSprite();
 	sf::Sprite getInvSprite();
 	sf::FloatRect getBounds();
 	sf::FloatRect getInvBounds();
-	void setWentOut(bool wentOut);
-	bool getWentOut();
-	void setInvWentOut(bool wenInvOut);
-	bool getInvWentOut();
+	void setIsTimeWentOut(bool);
+	bool getIsTimeWentOut();
+	void setInvisibleWentOut(bool);
+	bool getInvisibleWentOut();
 	static unsigned short getCountBomb();
 private:
-	
 	sf::Texture textureBomb;
 	sf::Sprite spriteBomb;
-	sf::Sprite inviseBomb;
+	sf::Sprite invisibleBomb;
 	static unsigned short countBomb;
-	bool wentOut;
-	bool wentInvOut;
+	bool isTimeWentOut;
+	bool wentInvisibleOut;
 	sf::FloatRect bombBounds;
-	sf::FloatRect bombInvBounds;
-	sf::Clock superTime;
+	sf::FloatRect bombInvisibleBounds;
+	sf::Clock clock;
 	float currentFrame;
 	float lifeTimeSeconds;
 };

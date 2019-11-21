@@ -14,7 +14,7 @@ DeathHero::DeathHero(int x, int y, sf::Image imgDeathHero)
 DeathHero::~DeathHero()
 {
 }
-bool DeathHero::bitterDeath()
+bool DeathHero::isCompletelyDied()
 {
 
 		if (time.getElapsedTime().asMilliseconds() > 250 && time.getElapsedTime().asMilliseconds() < 500)

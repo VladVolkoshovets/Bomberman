@@ -406,7 +406,7 @@ void Game::logic()
 	// ²f the bomb time is out, detonation. Creating flames. Delete bomb
 	for (int i = 0; i < vBombs.size(); i++)
 	{
-		if (!vBombs[i]->isBombAlive(timeElapsed))
+		if (!vBombs[i]->bombAnimation(timeElapsed))
 		{
 			vvFire.push_back(getNewFire(vBombs[i]->getSprite().getPosition().x, vBombs[i]->getSprite().getPosition().y));
 			delete vBombs[i];
@@ -443,7 +443,7 @@ void Game::logic()
 	}
 
 	// After the animation of death, the game ends
-	if (deathHero != nullptr && !deathHero->bitterDeath())
+	if (deathHero != nullptr && !deathHero->isCompletelyDied())
 	{
 		isGameOver = true;
 	}
@@ -555,7 +555,7 @@ void Game::draw()
 	// Draw bomb
 	for (int i = 0; i < vBombs.size(); i++)
 	{
-		if (vBombs[i]->isBombAlive(timeElapsed))
+		if (vBombs[i]->bombAnimation(timeElapsed))
 		{
 			window.draw(vBombs[i]->getSprite());
 		}
