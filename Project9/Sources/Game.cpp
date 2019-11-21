@@ -119,8 +119,6 @@ void Game::timeBound()
 	clock.restart();
 	timeElapsed = timeElapsed / gameSpeed;
 }
-// A function that creates instances of classes of flames, and checks this possibility
-// Calling after bomb detonation, in the same position
 std::vector<Fire*> Game::getNewFire(int x, int y)
 {
 	// Fire central

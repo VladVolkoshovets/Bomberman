@@ -1,6 +1,6 @@
 #include"../Headers/Player.h"
 
-Hero::Hero()
+Player::Player()
 {
 	spriteHero.setTexture(textureMain);
 	spriteHero.setTextureRect(sf::IntRect(0, 0, 18, 21));
@@ -13,34 +13,34 @@ Hero::Hero()
 	spriteInvisible.setPosition(42, 44);
 	needToReturn = false;
 }
-Hero::~Hero()
+Player::~Player()
 {
 }
-void Hero::setTexture(sf::Image imageHero)
+void Player::setTexture(sf::Image imageHero)
 {
 	textureMain.loadFromImage(imageHero);
 }
-sf::Sprite Hero::GetSprite()
+sf::Sprite Player::GetSprite()
 {
 	return spriteHero;
 }
-sf::Sprite Hero::GetInvSprite()
+sf::Sprite Player::GetInvSprite()
 {
 	return spriteInvisible;
 }
-void Hero::setMS(float moveSpeed)
+void Player::setMS(float moveSpeed)
 {
 	this->moveSpeed = moveSpeed;
 }
-void Hero::setBombCount(unsigned short bombCount)
+void Player::setBombCount(unsigned short bombCount)
 {
 	this->bombCount = bombCount;
 }
-unsigned short Hero::getBombCount()
+unsigned short Player::getBombCount()
 {
 	return bombCount;
 }
-void Hero::MoveLeft(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall& wall)
+void Player::MoveLeft(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall& wall)
 {
 	needToReturn = false;
 	// Animation
@@ -125,7 +125,7 @@ void Hero::MoveLeft(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, st
 		spriteInvisible.move(moveSpeed * time, 0);
 	}
 }
-void Hero::MoveRight(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall& wall)
+void Player::MoveRight(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall& wall)
 {
 	needToReturn = false;
 	currentFrame += 0.1 * time;
@@ -206,7 +206,7 @@ void Hero::MoveRight(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, s
 		spriteInvisible.move(-moveSpeed * time, 0);
 	}
 }
-void Hero::MoveUp(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall& wall)
+void Player::MoveUp(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall& wall)
 {
 	needToReturn = false;
 	currentFrame += 0.1 * time;
@@ -288,7 +288,7 @@ void Hero::MoveUp(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std:
 	}
 }
 
-void Hero::MoveDown(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall& wall)
+void Player::MoveDown(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall& wall)
 {
 	needToReturn = false;
 	currentFrame += 0.1 * time;
@@ -367,7 +367,7 @@ void Hero::MoveDown(Blocks* indestBlocksArr, unsigned short sizeIndestBlocks, st
 		spriteInvisible.move(0, -moveSpeed * time);
 	}
 }
-void Hero::move(Blocks * indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall & wall)
+void Player::move(Blocks * indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall & wall)
 {
 
 	needToReturn = true;

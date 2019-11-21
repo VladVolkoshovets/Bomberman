@@ -68,7 +68,7 @@ private:
 	Boost *boost;
 	sf::Clock clock;
 	sf::Sprite sprFire;
-	Hero hero;
+	Player hero;
 	bool isHeroAlive;
 	bool isGameOver;
 	DeathHero *deathHero;
@@ -77,10 +77,15 @@ private:
 	void setGameParameters();
 	void setLevelParameters();
 	void generationLevel();
+	// Binding to time
 	void timeBound();
+	// Return false if window was closed
 	bool isWidowOpen();
 	void logic();
+	// Draw and display everything in the game
 	void draw();
+	// Creates instances of classes of flames, and checks this possibility
+	// Calling after bomb detonation, in the same position
 	std::vector<Fire*> getNewFire(int x, int y);
 
 public:
