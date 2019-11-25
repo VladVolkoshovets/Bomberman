@@ -55,7 +55,7 @@ private:
 	Wall wall;
 	Blocks *blocksIndestr;
 	unsigned short blocksIndestrAmount;
-	std::vector<Blocks*> blocksDestr;
+	std::vector<Blocks*> vBlocksDestr;
 	std::vector<Bomb*> vBombs;
 	std::vector<std::vector<Fire*>> vvFire;
 	std::vector<Fire*> vFire;
@@ -71,19 +71,32 @@ private:
 	Player hero;
 	bool isHeroAlive;
 	bool isGameOver;
+
+	bool isLevelCompleted;
 	DeathHero *deathHero;
 	sf::Event windowEvent;
 	bool loadingResources();
 	void setGameParameters();
-	void setLevelParameters();
-	void generationLevel();
+	void setFirstLevelParameters();
+	void setSecondLevelParameters();
+	void levelGeneration();
+	void levelDestructor();
+
 	// Binding to time
 	void timeBound();
+
 	// Return false if window was closed
 	bool isWidowOpen();
+
+	// handles game logic, works with any levels
 	void logic();
-	// Draw and display everything in the game
+
+	// Draw and display everything in the game, works with any levels
 	void draw();
+
+	// Main game cycle, works with any levels
+	void gameCycle();
+
 	// Creates instances of classes of flames, and checks this possibility
 	// Calling after bomb detonation, in the same position
 	std::vector<Fire*> getNewFire(int x, int y);

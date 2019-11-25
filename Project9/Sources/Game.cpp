@@ -28,6 +28,9 @@ bool Game::loadingResources()
 }
 void Game::setGameParameters()
 {
+	// Hide console
+	#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+
 	// Set textures
 	fone.setTexture(imgFone);
 	hero.setTexture(imgHero);
@@ -37,17 +40,10 @@ void Game::setGameParameters()
 
 	// Create window. Set parameters
 	window.create(sf::VideoMode(600, 600), "Bomberman");
-	window.setFramerateLimit(60);
+	window.setFramerateLimit(240);
 	srand(time(0));
-}
-void Game::setLevelParameters()
-{
 	gameSpeed = 10000;
-	blocksIndestrAmount = 36;
-	monstersCount = 5;
-	maxPosForDestrBlocks = 131;
-	isGameOver = false;
-
+	
 	// Set player characteristics
 	moveSpeed = 1.3;
 	bombÑount = 2;
@@ -56,8 +52,28 @@ void Game::setLevelParameters()
 	hero.setBombCount(bombÑount);
 	isHeroAlive = true;
 	deathHero = nullptr;
+}
+void Game::setFirstLevelParameters()
+{
+	
+	blocksIndestrAmount = 36;
+	monstersCount = 3;
+	maxPosForDestrBlocks = 131;
+	isGameOver = false;
+	isLevelCompleted = false;
+
+
 };
-void Game::generationLevel() 
+void Game::setSecondLevelParameters()
+{
+	hero.setDefaultPosition();
+	blocksIndestrAmount = 36;
+	monstersCount = 5;
+	maxPosForDestrBlocks = 131;
+	isGameOver = false;
+	isLevelCompleted = false;
+}
+void Game::levelGeneration() 
 {
 	// Set indestructible blocks
 	blocksIndestr = new Indestructible[blocksIndestrAmount];
@@ -78,28 +94,35 @@ void Game::generationLevel()
 			pos++;
 		}
 		pos++;
-		blocksDestr.push_back(new Destructible(&textureBlocks, pos));
+		vBlocksDestr.push_back(new Destructible(&textureBlocks, pos));
 	}
 
 	// Rand pos for dors behind block, set it;
-	int* numbBlockForDor = new int;
-	*numbBlockForDor = rand() % blocksDestr.size();
-	door = new Door(blocksDestr.at(*numbBlockForDor)->getSprite().getPosition().x, blocksDestr.at(*numbBlockForDor)->getSprite().getPosition().y, imgBlocks);
+	int numbBlockForDor;
+	numbBlockForDor = rand() % vBlocksDestr.size();
+	door = new Door(vBlocksDestr.at(numbBlockForDor)->getSprite().getPosition().x, vBlocksDestr.at(numbBlockForDor)->getSprite().getPosition().y, imgBlocks);
 
 	// Rand pos for boost behind block, set it;
-	int* numbBlockForBoost = new int;
+	int numbBlockForBoost;
 	do {
-		*numbBlockForBoost = rand() % blocksDestr.size();
-	} while (*numbBlockForDor == *numbBlockForBoost);
-	boost = new Boost(blocksDestr.at(*numbBlockForBoost)->getSprite().getPosition().x, blocksDestr.at(*numbBlockForBoost)->getSprite().getPosition().y, imgBoost);
-	delete numbBlockForDor, numbBlockForBoost;
+		numbBlockForBoost = rand() % vBlocksDestr.size();
+	} while (numbBlockForDor == numbBlockForBoost);
+	boost = new Boost(vBlocksDestr.at(numbBlockForBoost)->getSprite().getPosition().x, vBlocksDestr.at(numbBlockForBoost)->getSprite().getPosition().y, imgBoost);
 
 	// Set monsters;
 	vMonsters.clear();
 	for (int i = 0; i < monstersCount; i++)
 	{
-		vMonsters.push_back(new SimpleMonster(blocksIndestr, blocksIndestrAmount, blocksDestr, imgMonster));
+		vMonsters.push_back(new SimpleMonster(blocksIndestr, blocksIndestrAmount, vBlocksDestr, imgMonster));
 	}
+}
+void Game::levelDestructor()
+{
+	delete[] blocksIndestr;
+	vBlocksDestr.clear();
+	delete door;
+	delete boost;
+ 
 }
 bool Game::isWidowOpen()
 {
@@ -148,13 +171,13 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 		{
 			break;
 		}
-		for (int j = 0; j < blocksDestr.size(); j++)
+		for (int j = 0; j < vBlocksDestr.size(); j++)
 		{
-			if (sprFire.getGlobalBounds().intersects(blocksDestr.at(j)->getBound()))
+			if (sprFire.getGlobalBounds().intersects(vBlocksDestr.at(j)->getBound()))
 			{
-				vRuined.push_back(new Ruined(blocksDestr.at(j)->getSprite().getPosition().x, blocksDestr.at(j)->getSprite().getPosition().y, imgRuined));
-				delete blocksDestr.at(j);
-				blocksDestr.erase(blocksDestr.begin() + j);
+				vRuined.push_back(new Ruined(vBlocksDestr.at(j)->getSprite().getPosition().x, vBlocksDestr.at(j)->getSprite().getPosition().y, imgRuined));
+				delete vBlocksDestr.at(j);
+				vBlocksDestr.erase(vBlocksDestr.begin() + j);
 				j--;
 				possibility = false;
 				break;
@@ -198,13 +221,13 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 		{
 			break;
 		}
-		for (int j = 0; j < blocksDestr.size(); j++)
+		for (int j = 0; j < vBlocksDestr.size(); j++)
 		{
-			if (sprFire.getGlobalBounds().intersects(blocksDestr.at(j)->getBound()))
+			if (sprFire.getGlobalBounds().intersects(vBlocksDestr.at(j)->getBound()))
 			{
-				vRuined.push_back(new Ruined(blocksDestr.at(j)->getSprite().getPosition().x, blocksDestr.at(j)->getSprite().getPosition().y, imgRuined));
-				delete blocksDestr.at(j);
-				blocksDestr.erase(blocksDestr.begin() + j);
+				vRuined.push_back(new Ruined(vBlocksDestr.at(j)->getSprite().getPosition().x, vBlocksDestr.at(j)->getSprite().getPosition().y, imgRuined));
+				delete vBlocksDestr.at(j);
+				vBlocksDestr.erase(vBlocksDestr.begin() + j);
 				j--;
 				possibility = false;
 				break;
@@ -247,13 +270,13 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 		{
 			break;
 		}
-		for (int j = 0; j < blocksDestr.size(); j++)
+		for (int j = 0; j < vBlocksDestr.size(); j++)
 		{
-			if (sprFire.getGlobalBounds().intersects(blocksDestr.at(j)->getBound()))
+			if (sprFire.getGlobalBounds().intersects(vBlocksDestr.at(j)->getBound()))
 			{
-				vRuined.push_back(new Ruined(blocksDestr.at(j)->getSprite().getPosition().x, blocksDestr.at(j)->getSprite().getPosition().y, imgRuined));
-				delete blocksDestr.at(j);
-				blocksDestr.erase(blocksDestr.begin() + j);
+				vRuined.push_back(new Ruined(vBlocksDestr.at(j)->getSprite().getPosition().x, vBlocksDestr.at(j)->getSprite().getPosition().y, imgRuined));
+				delete vBlocksDestr.at(j);
+				vBlocksDestr.erase(vBlocksDestr.begin() + j);
 				possibility = false;
 				break;
 			}
@@ -295,13 +318,13 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 		{
 			break;
 		}
-		for (int j = 0; j < blocksDestr.size(); j++)
+		for (int j = 0; j < vBlocksDestr.size(); j++)
 		{
-			if (sprFire.getGlobalBounds().intersects(blocksDestr.at(j)->getBound()))
+			if (sprFire.getGlobalBounds().intersects(vBlocksDestr.at(j)->getBound()))
 			{
-				vRuined.push_back(new Ruined(blocksDestr.at(j)->getSprite().getPosition().x, blocksDestr.at(j)->getSprite().getPosition().y, imgRuined));
-				delete blocksDestr.at(j);
-				blocksDestr.erase(blocksDestr.begin() + j);
+				vRuined.push_back(new Ruined(vBlocksDestr.at(j)->getSprite().getPosition().x, vBlocksDestr.at(j)->getSprite().getPosition().y, imgRuined));
+				delete vBlocksDestr.at(j);
+				vBlocksDestr.erase(vBlocksDestr.begin() + j);
 				j--;
 				possibility = false;
 				break;
@@ -327,7 +350,7 @@ void Game::logic()
 	// Move hero and bomb placing
 	if (isHeroAlive == true)
 	{
-		hero.move(blocksIndestr, blocksIndestrAmount, blocksDestr, vBombs, timeElapsed, wall);
+		hero.move(blocksIndestr, blocksIndestrAmount, vBlocksDestr, vBombs, timeElapsed, wall);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
 		{
 			if ((Bomb::getCountBomb() == 0) || (Bomb::getCountBomb() < hero.getBombCount() && !hero.GetInvSprite().getGlobalBounds().intersects(vBombs.back()->getBounds())))
@@ -417,7 +440,7 @@ void Game::logic()
 	{
 		for (size_t j = 0; j < vMonsters.size(); j++)
 		{
-			vMonsters.at(j)->move(blocksIndestr, blocksIndestrAmount, blocksDestr, timeElapsed, vBombs, wall);
+			vMonsters.at(j)->move(blocksIndestr, blocksIndestrAmount, vBlocksDestr, timeElapsed, vBombs, wall);
 			if (!vvFire.empty())
 			{
 				for (size_t k = 0; k < vvFire.size(); k++)
@@ -449,7 +472,7 @@ void Game::logic()
 	// After killing all the monstersand and passing the hero at the door, the level is complete
 	if (hero.GetInvSprite().getGlobalBounds().intersects(door->getBound()) && vMonsters.empty())
 	{
-		// next lvl
+		isLevelCompleted = true;
 		isGameOver = true;
 	}
 }
@@ -470,9 +493,9 @@ void Game::draw()
 	{
 		window.draw(blocksIndestr[i].getSprite());
 	}
-	for (int i = 0; i < blocksDestr.size(); i++)
+	for (int i = 0; i < vBlocksDestr.size(); i++)
 	{
-		window.draw(blocksDestr.at(i)->getSprite());
+		window.draw(vBlocksDestr.at(i)->getSprite());
 
 	}
 
@@ -566,6 +589,15 @@ void Game::draw()
 	}
 	window.display();
 }
+void Game::gameCycle()
+{
+	while (Game::isWidowOpen() && !isGameOver)
+	{
+		timeBound();
+		logic();
+		draw();
+	}
+}
  void Game::mainMethod()
 {
 	 // Ñheck is all files loaded. if not, stops at the console with error mesage. The game does not start
@@ -573,16 +605,18 @@ void Game::draw()
 	 {
 		 system("pause");
 		 return;
-	 }
+	 }	
 	setGameParameters();
-	setLevelParameters();
-	generationLevel();
-
-	// Main game cycle
-	while (Game::isWidowOpen() && !isGameOver)
+	setFirstLevelParameters();
+	levelGeneration();
+	gameCycle();
+	if (isLevelCompleted == false)
 	{
-		timeBound();
-		logic();
-		draw();
+		// Return to menu, but no menu yet
+		return;
 	}
+	levelDestructor();
+	setSecondLevelParameters();
+	levelGeneration();
+	gameCycle();
 }

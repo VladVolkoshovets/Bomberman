@@ -34,4 +34,5 @@ public:
 	void setBombCount(unsigned short bombCount);
 	unsigned short getBombCount();
 	void move(Blocks *indestBlocksArr, unsigned short sizeIndestBlocks, std::vector<Blocks*> destBlocksV, std::vector<Bomb*> vBombs, float time, Wall &wall);
+	void setDefaultPosition();
 };

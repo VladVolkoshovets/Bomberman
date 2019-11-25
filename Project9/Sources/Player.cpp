@@ -405,3 +405,8 @@ void Player::move(Blocks * indestBlocksArr, unsigned short sizeIndestBlocks, std
 	}
 
 }
+void Player::setDefaultPosition()
+{
+	spriteHero.setPosition(40, 33);
+	spriteInvisible.setPosition(42, 44);
+}
