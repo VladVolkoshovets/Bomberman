@@ -5,7 +5,7 @@ class Fire
 public:
 	Fire();
 	Fire(int, int, sf::Image);
-	~Fire();
+	virtual ~Fire();
 	void setPos(int, int, sf::Sprite&);
 	virtual bool isFireBurning() = 0;
 	sf::Sprite getSprite();

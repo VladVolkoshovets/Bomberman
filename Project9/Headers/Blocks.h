@@ -8,6 +8,7 @@ protected:
 
 public:
 	Blocks();
+	virtual ~Blocks();
 	virtual void setPos(int) = 0;
 	sf::FloatRect getBound();
 	sf::Sprite getSprite();

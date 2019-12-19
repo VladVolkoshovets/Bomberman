@@ -6,7 +6,7 @@ class SimpleMonster : public Monster
 {
 public:
 	SimpleMonster(Blocks *, unsigned short, std::vector<Blocks*>, sf::Image);
-	~SimpleMonster();
+	virtual ~SimpleMonster();
 
 	void move(Blocks *, unsigned short, std::vector<Blocks*>, float, std::vector<Bomb*>, Wall &);
 

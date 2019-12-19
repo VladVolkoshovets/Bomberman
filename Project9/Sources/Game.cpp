@@ -1,4 +1,5 @@
 #include "..\Headers\Game.h"
+#include<thread>
 float Game::timeElapsed = 0;
 Game *Game::game = nullptr;
 Game::Game()
@@ -57,7 +58,7 @@ void Game::setFirstLevelParameters()
 {
 	
 	blocksIndestrAmount = 36;
-	monstersCount = 3;
+	monstersCount = 0;
 	maxPosForDestrBlocks = 131;
 	isGameOver = false;
 	isLevelCompleted = false;
@@ -72,6 +73,7 @@ void Game::setSecondLevelParameters()
 	maxPosForDestrBlocks = 131;
 	isGameOver = false;
 	isLevelCompleted = false;
+
 }
 void Game::levelGeneration() 
 {
@@ -83,8 +85,11 @@ void Game::levelGeneration()
 	}
 
 	// Set destructible blocks
+	vBlocksDestr.reserve(maxPosForDestrBlocks);
 	for (int i = 0, pos = 1; pos <= maxPosForDestrBlocks; i++)
 	{
+		pos++;
+		// 
 		if (rand() % 2 == 0)
 		{
 			pos++;
@@ -93,7 +98,7 @@ void Game::levelGeneration()
 		{
 			pos++;
 		}
-		pos++;
+	
 		vBlocksDestr.push_back(new Destructible(&textureBlocks, pos));
 	}
 
@@ -119,9 +124,30 @@ void Game::levelGeneration()
 void Game::levelDestructor()
 {
 	delete[] blocksIndestr;
+
+	for (size_t i = 0; i < vBlocksDestr.size(); i++)
+	{
+		delete vBlocksDestr.at(i);
+	}
 	vBlocksDestr.clear();
 	delete door;
 	delete boost;
+	for (size_t i = 0; i < vBombs.size(); i++)
+	{
+		delete vBombs.at(i);
+	}
+	vBombs.clear();
+	for (size_t i = 0; i < vvFire.size(); i++)
+	{
+		for (size_t j = 0; j < vvFire.at(i).size(); j++)
+		{
+			delete vvFire.at(i).at(j);
+		}
+		vvFire.at(i).clear();
+		
+	}
+	vvFire.clear();
+
  
 }
 bool Game::isWidowOpen()
@@ -146,7 +172,7 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 {
 	// Fire central
 	int fireX = x, fireY = y;
-	bool possibility = true;
+	bool firePossibility = true;
 	vFire.clear();
 	vFire.push_back(new MainFire(x, y, imgFire));
 	// Fire right
@@ -163,11 +189,11 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 		{
 			if (sprFire.getGlobalBounds().intersects(blocksIndestr[j].getBound()))
 			{
-				possibility = false;
+				firePossibility = false;
 				break;
 			}
 		}
-		if (possibility == false)
+		if (firePossibility == false)
 		{
 			break;
 		}
@@ -179,11 +205,11 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 				delete vBlocksDestr.at(j);
 				vBlocksDestr.erase(vBlocksDestr.begin() + j);
 				j--;
-				possibility = false;
+				firePossibility = false;
 				break;
 			}
 		}
-		if (possibility == false)
+		if (firePossibility == false)
 		{
 			break;
 		}
@@ -199,7 +225,7 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 	}
 	// Fire left
 	fireX = x;
-	possibility = true;
+	firePossibility = true;
 	for (int i = 0; i < fireSize; i++)
 	{
 		fireX -= UNIT_SIZE;
@@ -213,11 +239,11 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 		{
 			if (sprFire.getGlobalBounds().intersects(blocksIndestr[j].getBound()))
 			{
-				possibility = false;
+				firePossibility = false;
 				break;
 			}
 		}
-		if (possibility == false)
+		if (firePossibility == false)
 		{
 			break;
 		}
@@ -229,11 +255,11 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 				delete vBlocksDestr.at(j);
 				vBlocksDestr.erase(vBlocksDestr.begin() + j);
 				j--;
-				possibility = false;
+				firePossibility = false;
 				break;
 			}
 		}
-		if (possibility == false)
+		if (firePossibility == false)
 		{
 			break;
 		}
@@ -249,7 +275,7 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 	}
 	// Fire top
 	fireX = x;
-	possibility = true;
+	firePossibility = true;
 	for (int i = 0; i < fireSize; i++)
 	{
 		fireY -= UNIT_SIZE;
@@ -262,11 +288,11 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 		{
 			if (sprFire.getGlobalBounds().intersects(blocksIndestr[j].getBound()))
 			{
-				possibility = false;
+				firePossibility = false;
 				break;
 			}
 		}
-		if (possibility == false)
+		if (firePossibility == false)
 		{
 			break;
 		}
@@ -277,11 +303,11 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 				vRuined.push_back(new Ruined(vBlocksDestr.at(j)->getSprite().getPosition().x, vBlocksDestr.at(j)->getSprite().getPosition().y, imgRuined));
 				delete vBlocksDestr.at(j);
 				vBlocksDestr.erase(vBlocksDestr.begin() + j);
-				possibility = false;
+				firePossibility = false;
 				break;
 			}
 		}
-		if (possibility == false)
+		if (firePossibility == false)
 		{
 			break;
 		}
@@ -297,7 +323,7 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 	}
 	// Fire bot
 	fireY = y;
-	possibility = true;
+	firePossibility = true;
 	for (int i = 0; i < fireSize; i++)
 	{
 		fireY += UNIT_SIZE;
@@ -310,11 +336,11 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 		{
 			if (sprFire.getGlobalBounds().intersects(blocksIndestr[j].getBound()))
 			{
-				possibility = false;
+				firePossibility = false;
 				break;
 			}
 		}
-		if (possibility == false)
+		if (firePossibility == false)
 		{
 			break;
 		}
@@ -326,11 +352,11 @@ std::vector<Fire*> Game::getNewFire(int x, int y)
 				delete vBlocksDestr.at(j);
 				vBlocksDestr.erase(vBlocksDestr.begin() + j);
 				j--;
-				possibility = false;
+				firePossibility = false;
 				break;
 			}
 		}
-		if (possibility == false)
+		if (firePossibility == false)
 		{
 			break;
 		}
@@ -576,7 +602,7 @@ void Game::draw()
 	// Draw bomb
 	for (int i = 0; i < vBombs.size(); i++)
 	{
-		if (vBombs[i]->bombAnimation(timeElapsed))
+		if (vBombs[i] != nullptr && vBombs[i]->bombAnimation(timeElapsed))
 		{
 			window.draw(vBombs[i]->getSprite());
 		}
@@ -609,6 +635,7 @@ void Game::gameCycle()
 	setGameParameters();
 	setFirstLevelParameters();
 	levelGeneration();
+
 	gameCycle();
 	if (isLevelCompleted == false)
 	{

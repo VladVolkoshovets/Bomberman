@@ -101,6 +101,7 @@ private:
 	// Calling after bomb detonation, in the same position
 	std::vector<Fire*> getNewFire(int x, int y);
 
+
 public:
 	static Game* getInstance();
 	void mainMethod();

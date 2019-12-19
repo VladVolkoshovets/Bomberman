@@ -2,6 +2,9 @@
 Blocks::Blocks() {
 	spriteBlocks = new sf::Sprite;
 }
+Blocks::~Blocks()
+{
+}
 sf::Sprite Blocks::getSprite()
 {
 	return *spriteBlocks;
